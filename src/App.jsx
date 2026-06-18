@@ -1,16 +1,17 @@
 import './App.css'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import NavBar from './components/NavBar'
-import Sidebar from './components/Sidebar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
+import UnidadAdmin from './pages/UnidadAdmin'
 
 function App() {
   return (
     <BrowserRouter>
-            <Home />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/unidad-administrativa" element={<UnidadAdmin />} />
+      </Routes>
     </BrowserRouter>
   )
 }
+
 export default App
