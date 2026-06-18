@@ -1,53 +1,251 @@
-.home-container {
-  padding: 20px;
+@import url('https://fonts.googleapis.com/css2?family=Chango&family=Indie+Flower&display=swap');
+
+:root {
+  --navy: #00366c;
+  --blue: #1f85ec;
+  --mid-blue: #396ea4;
+  --white: #ffffff;
 }
 
-.home-hero {
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.vsiaf-root {
+  font-family: Tahoma, Arial, sans-serif;
+  background: #c0c0c0;
+  color: #000;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.win-titlebar {
+  height: 30px;
+  background: linear-gradient(to right, #001b5e, #0a4db8);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  font-size: 13px;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+  flex-shrink: 0;
+}
+
+.win-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.win-controls button {
+  width: 22px;
+  height: 20px;
+  border: 1px solid #000;
+  background: #d4d0c8;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.win-controls button:hover { background: #e8e8e8; }
+.win-controls .cerrar { color: #c00000; }
+
+.encabezado-marca {
+  height: 160px;
+  background: linear-gradient(135deg, var(--navy) 60%, var(--mid-blue) 90%, var(--blue) 100%);
+  padding: 14px 20px 10px 20px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.contenido-marca {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bandera {
+  width: 220px;
+  height: 110px;
+  background-image: url('../assets/banderaBol.png');
+  background-size: cover;
+  background-position: center;
+  border: 2px solid rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+.texto-marca {
+  display: flex;
+  flex-direction: column;
+  margin-left: 24px;
+}
+
+.titulo-marca {
+  font-family: 'Chango', sans-serif;
+  font-size: 58px;
+  color: #ffffff;
+  text-shadow: -4px 6px 4px rgba(0,0,0,0.5);
+  line-height: 1;
+}
+
+.subtitulo-marca {
+  font-family: 'Indie Flower', cursive;
+  font-size: 24px;
+  color: #c5daf5;
+  margin-left: 40px;
+  margin-top: 4px;
+}
+
+.app-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 240px;
+  background: #d4d0c8;
+  border-right: 2px solid #808080;
+  padding: 10px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.menu-title {
+  background: #003399;
+  color: #fff;
   text-align: center;
-  padding: 40px 20px;
-  background: #282c34;
-  color: white;
-  border-radius: 10px;
-  margin-bottom: 30px;
+  font-size: 13px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  font-weight: bold;
 }
 
-.home-hero h1 {
-  color: white;
-  font-size: 48px;
-  margin: 0 0 10px;
+.menu-list { list-style: none; }
+.menu-list li { margin-bottom: 5px; }
+
+.menu-btn {
+  display: block;
+  width: 100%;
+  padding: 7px 10px;
+  text-decoration: none;
+  text-align: center;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  color: #1b1b1b;
+  background: linear-gradient(
+    to bottom,
+    #eef3f8 0%,
+    #dce7f2 45%,
+    #bfd3e6 55%,
+    #d8e3ee 100%
+  );
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #7f7f7f;
+  border-bottom: 2px solid #7f7f7f;
+  cursor: pointer;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #a0a0a0;
 }
 
-.home-subtitle {
-  font-size: 20px;
-  color: #aaa;
+.menu-btn:hover {
+  background: linear-gradient(
+    to bottom,
+    #f7fbff 0%,
+    #e8f0f8 45%,
+    #cddceb 55%,
+    #e6eef7 100%
+  );
+}
+
+.menu-btn:active {
+  border-top: 2px solid #7f7f7f;
+  border-left: 2px solid #7f7f7f;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.25);
+  background: linear-gradient(to bottom, #bfd3e6 0%, #dce7f2 100%);
+}
+
+.content-area {
+  flex: 1;
+  background: #f0f0f0;
+  padding: 16px;
+  overflow-y: auto;
 }
 
 .home-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 }
 
 .home-card {
-  background: white;
-  border: 1px solid #e6e6e6;
-  border-radius: 10px;
-  padding: 20px;
+  background: #ffffff;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #7f7f7f;
+  border-bottom: 2px solid #7f7f7f;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #a0a0a0,
+              2px 2px 4px rgba(0,0,0,0.15);
+  padding: 20px 16px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: box-shadow 0.2s;
+  cursor: pointer;
+  transition: box-shadow 0.1s;
 }
 
 .home-card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  background: #f0f6ff;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #a0a0a0,
+              3px 3px 8px rgba(0,0,0,0.2);
+}
+
+.home-card:active {
+  border-top: 2px solid #7f7f7f;
+  border-left: 2px solid #7f7f7f;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.25);
 }
 
 .home-card h2 {
-  font-size: 18px;
-  margin: 0 0 8px;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #00306a;
 }
 
 .home-card p {
-  font-size: 13px;
-  color: #666;
+  font-size: 12px;
+  color: #444;
+  line-height: 1.5;
+}
+.hero-image {
+  width: 100%;
+  height: 200px;
+  border: 2px solid #808080;
+  background-image: url('../assets/casa-de-la-moneda-1.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.hero-watermark {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
 }

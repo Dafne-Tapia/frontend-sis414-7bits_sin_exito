@@ -5,8 +5,6 @@ import NavBar from './components/NavBar'
 import Sidebar from './components/Sidebar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
-import About from './pages/About'
-import Entidad from './pages/Entidad'
 
 function App() {
   return (
@@ -18,8 +16,6 @@ function App() {
           <NavBar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/entidad" element={<Entidad />} />
-            <Route path="/about" element={<About />} />
           </Routes>
         </main>
       </div>
