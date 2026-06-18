@@ -1,0 +1,26 @@
+.unidad-admin-page {
+  padding: 20px;
+}
+
+.unidad-admin-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  max-width: 500px;
+}
+
+.unidad-admin-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.unidad-admin-card input {
+  padding: 10px;
+}
+
+.unidad-admin-card button {
+  padding: 10px;
+  cursor: pointer;
+}
