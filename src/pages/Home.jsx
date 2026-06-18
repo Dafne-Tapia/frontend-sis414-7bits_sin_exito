@@ -1,62 +1,69 @@
-import { useState } from "react";
-import UnidadAdmin from "./UnidadAdmin";
-import "./Home.css";
+import './Home.css'
 
 function Home() {
-  const [mostrarUnidadAdmin, setMostrarUnidadAdmin] = useState(false);
+  const menuItems = [
+    { label: 'Entidad', path: '/entidad' },
+    { label: 'Objeto de Gasto', path: '/obj-gasto' },
+    { label: 'Unidad Administrativa', path: '/unidad-administrativa' },
+    { label: 'Mes', path: '/mes' },
+    { label: 'Estado', path: '/estado' },
+    { label: 'Baja', path: '/baja' },
+    { label: 'Cta Par', path: '/cta-par' },
+  ]
 
-  if (mostrarUnidadAdmin) {
-    return <UnidadAdmin />;
-  }
 
   return (
-    <div className="home-container">
-      <div className="home-hero">
-        <h1>V.S.I.A.F</h1>
-        <p className="home-subtitle">Sistema de Activos Fijos</p>
+    <div className="vsiaf-root">
+
+      {/* Barra de título estilo Windows */}
+      <div className="win-titlebar">
+        <span>&#9632; SISTEMA DE ACTIVOS FIJOS</span>
+        <div className="win-controls">
+          <button aria-label="Minimizar">&#8211;</button>
+          <button aria-label="Maximizar">&#9633;</button>
+          <button aria-label="Cerrar" className="cerrar">&#x2715;</button>
+        </div>
       </div>
 
-      <div className="home-cards">
-        <div className="home-card">
-          <h2>Entidad</h2>
-          <p>Gestión de entidades del sistema de activos fijos.</p>
+      {/* Encabezado con logo */}
+      <header className="encabezado-marca">
+        <div className="contenido-marca">
+          <div className="bandera" role="img" aria-label="Bandera de Bolivia" />
+          <div className="texto-marca">
+            <h1 className="titulo-marca">V.S.I.A.F</h1>
+            <p className="subtitulo-marca">Sistema de Activos Fijos</p>
+          </div>
         </div>
+      </header>
 
-        <div className="home-card">
-          <h2>Objeto de Gasto</h2>
-          <p>Administración de objetos de gasto.</p>
-        </div>
+      {/* Layout principal */}
+      <div className="app-layout">
 
-        <div
-          className="home-card"
-          onClick={() => setMostrarUnidadAdmin(true)}
-        >
-          <h2>Unidad Administrativa</h2>
-          <p>Gestión de unidades administrativas.</p>
-        </div>
+        {/* Sidebar */}
+        <nav className="sidebar" aria-label="Menú principal">
+          <h2 className="menu-title">MENU PRINCIPAL</h2>
+          <ul className="menu-list">
+            {menuItems.map((item) => (
+              <li key={item.path}>
+                <a href={item.path} className="menu-btn">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-        <div className="home-card">
-          <h2>Mes</h2>
-          <p>Control de meses del sistema.</p>
-        </div>
+        {/* Área de contenido con tarjetas */}
+        <main className="content-area">
+            <figure className="hero-image" role="img" aria-label="Casa de la Moneda - Potosí">
+              <span className="hero-watermark">Potosí</span>
+            </figure>
 
-        <div className="home-card">
-          <h2>Estado</h2>
-          <p>Gestión de estados de activos.</p>
-        </div>
+        </main>
 
-        <div className="home-card">
-          <h2>Baja</h2>
-          <p>Registro de bajas de activos.</p>
-        </div>
-
-        <div className="home-card">
-          <h2>Cta Par</h2>
-          <p>Gestión de cuentas par.</p>
-        </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home
