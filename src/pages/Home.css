@@ -1,0 +1,53 @@
+.home-container {
+  padding: 20px;
+}
+
+.home-hero {
+  text-align: center;
+  padding: 40px 20px;
+  background: #282c34;
+  color: white;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.home-hero h1 {
+  color: white;
+  font-size: 48px;
+  margin: 0 0 10px;
+}
+
+.home-subtitle {
+  font-size: 20px;
+  color: #aaa;
+}
+
+.home-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.home-card {
+  background: white;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+}
+
+.home-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.home-card h2 {
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+.home-card p {
+  font-size: 13px;
+  color: #666;
+}
