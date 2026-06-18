@@ -1,26 +1,155 @@
-.unidad-admin-page {
-  padding: 20px;
+.unidad-root {
+  width: 1120px;
+  margin: 0 auto;
+  background: #d7d4cc;
+  font-family: Arial, sans-serif;
+  border: 1px solid #999;
 }
 
-.unidad-admin-card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  max-width: 500px;
+.unidad-titlebar {
+  background: #1d1d1d;
+  color: white;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: bold;
 }
 
-.unidad-admin-card form {
+.unidad-header {
+  height: 150px;
+  background: linear-gradient(90deg, #00345f, #2d87d3);
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 35px;
+  padding: 0 30px;
+  color: white;
 }
 
-.unidad-admin-card input {
-  padding: 10px;
+.unidad-header h1 {
+  font-size: 58px;
+  margin: 0;
+  letter-spacing: 8px;
+  text-shadow: 3px 3px 4px black;
 }
 
-.unidad-admin-card button {
+.unidad-header p {
+  margin: 0;
+  font-size: 26px;
+}
+
+.unidad-bandera {
+  width: 210px;
+  height: 100px;
+  border: 1px solid #5d8db7;
+  background: linear-gradient(#e33 0 33%, #ffd928 33% 66%, #109447 66%);
+}
+
+.unidad-layout {
+  display: flex;
+}
+
+.unidad-menu {
+  width: 230px;
+  padding: 15px 10px;
+  background: #d2d0c9;
+}
+
+.unidad-menu h2 {
+  background: #003b8e;
+  color: white;
+  font-size: 18px;
+  text-align: center;
   padding: 10px;
+  margin: 0 0 10px;
+}
+
+.unidad-menu button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 8px;
+  border: 2px solid #9db7cc;
+  background: linear-gradient(#ffffff, #bcd2e4);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.unidad-menu .activo {
+  outline: 3px solid #437c2d;
+}
+
+.unidad-content {
+  flex: 1;
+  background: #efefef;
+  padding: 15px;
+}
+
+.unidad-info {
+  color: #0041a3;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.unidad-info p {
+  margin: 5px 0;
+}
+
+.unidad-panel {
+  border: 1px solid #aaa;
+  background: white;
+}
+
+.panel-small-title {
+  background: #222;
+  color: white;
+  padding: 5px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.panel-title {
+  background: linear-gradient(#0e4c82, #2c84c6);
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  padding: 12px;
+  font-size: 18px;
+}
+
+.unidad-table {
+  width: 88%;
+  margin: 25px auto 10px;
+  border-collapse: collapse;
+  background: white;
+}
+
+.unidad-table th {
+  background: #00417c;
+  color: white;
+  border: 1px solid #111;
+  padding: 6px;
+  font-size: 13px;
+}
+
+.unidad-table td {
+  height: 24px;
+  border: 1px solid #333;
+}
+
+.unidad-buttons {
+  width: 80%;
+  margin: 15px auto 25px;
+  border: 1px solid #0055a5;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 5px;
+}
+
+.unidad-buttons button {
+  width: 110px;
+  padding: 8px;
+  background: linear-gradient(#0b6781, #053d55);
+  color: white;
+  border: 2px solid #ccc;
+  font-weight: bold;
   cursor: pointer;
 }
