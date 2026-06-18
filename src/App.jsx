@@ -5,11 +5,15 @@ import NavBar from './components/NavBar'
 import Sidebar from './components/Sidebar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
+import CtaPar from './pages/CtaPar'
 
 function App() {
   return (
     <BrowserRouter>
-            <Home />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cta-par" element={<CtaPar />} />
+      </Routes>
     </BrowserRouter>
   )
 }

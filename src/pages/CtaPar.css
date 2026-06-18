@@ -1,0 +1,266 @@
+.cta-par-root {
+  min-height: 100vh;
+  background: #c0c0c0;
+  color: #111;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+.cta-par-titlebar {
+  height: 30px;
+  background: linear-gradient(to right, #001b5e, #0a4db8);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  font-size: 13px;
+  font-weight: bold;
+  border-bottom: 1px solid #000;
+}
+
+.cta-par-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.cta-par-controls button {
+  width: 22px;
+  height: 20px;
+  border: 1px solid #000;
+  background: #d4d0c8;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cta-par-close {
+  color: #c00000;
+}
+
+.cta-par-header {
+  min-height: 118px;
+  background: linear-gradient(135deg, #00366c 60%, #396ea4 90%, #1f85ec 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 28px;
+  border-bottom: 2px solid #6b6b6b;
+}
+
+.cta-par-kicker {
+  margin: 0 0 6px;
+  color: #c5daf5;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.cta-par-header h1 {
+  margin: 0;
+  color: #fff;
+  font-size: 34px;
+  line-height: 1;
+}
+
+.cta-par-home,
+.cta-par-actions button,
+.cta-par-row-actions button {
+  color: #1b1b1b;
+  background: linear-gradient(to bottom, #eef3f8 0%, #dce7f2 45%, #bfd3e6 55%, #d8e3ee 100%);
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #7f7f7f;
+  border-bottom: 2px solid #7f7f7f;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #a0a0a0;
+  cursor: pointer;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.cta-par-home {
+  padding: 8px 14px;
+  white-space: nowrap;
+}
+
+.cta-par-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 360px) 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+.cta-par-panel {
+  background: #d4d0c8;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #808080;
+  border-bottom: 2px solid #808080;
+  padding: 14px;
+}
+
+.cta-par-panel h2 {
+  margin: 0 0 12px;
+  background: #003399;
+  color: #fff;
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.cta-par-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.cta-par-form label,
+.cta-par-search {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cta-par-full {
+  grid-column: 1 / -1;
+}
+
+.cta-par-form input,
+.cta-par-form select,
+.cta-par-search input {
+  min-height: 30px;
+  border: 2px inset #fff;
+  background: #fff;
+  color: #111;
+  font: 13px Tahoma, Arial, sans-serif;
+  padding: 5px 7px;
+}
+
+.cta-par-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.cta-par-actions button {
+  min-width: 86px;
+  min-height: 30px;
+}
+
+.cta-par-table-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.cta-par-table-head h2 {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.cta-par-search {
+  width: min(300px, 40%);
+}
+
+.cta-par-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #808080;
+  background: #fff;
+}
+
+.cta-par-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 13px;
+}
+
+.cta-par-table th,
+.cta-par-table td {
+  border: 1px solid #a7a7a7;
+  padding: 8px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.cta-par-table th {
+  background: #003399;
+  color: #fff;
+  font-size: 12px;
+}
+
+.cta-par-table tbody tr:nth-child(even) {
+  background: #eef3f8;
+}
+
+.cta-par-status {
+  display: inline-block;
+  min-width: 70px;
+  padding: 4px 8px;
+  border: 1px solid #707070;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.cta-par-status.is-active {
+  background: #d8f0d2;
+  color: #185f16;
+}
+
+.cta-par-status.is-inactive {
+  background: #f4d1d1;
+  color: #8a1f1f;
+}
+
+.cta-par-row-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.cta-par-row-actions button {
+  min-height: 26px;
+  padding: 3px 8px;
+}
+
+@media (max-width: 900px) {
+  .cta-par-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-par-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cta-par-search {
+    width: 100%;
+  }
+
+  .cta-par-table-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  .cta-par-header h1 {
+    font-size: 26px;
+  }
+
+  .cta-par-form {
+    grid-template-columns: 1fr;
+  }
+}
