@@ -9,17 +9,7 @@ import Home from './pages/Home'
 function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <div className="app-layout">
-        <Sidebar />
-        <main className="main-content">
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </main>
-      </div>
-      <Footer />
+            <Home />
     </BrowserRouter>
   )
 }

@@ -2,8 +2,6 @@ import './Home.css'
 
 function Home() {
   const menuItems = [
-    { label: 'Iniciar Sesión', path: '/login' },
-    { label: 'Administrar Recursos', path: '/recursos' },
     { label: 'Entidad', path: '/entidad' },
     { label: 'Objeto de Gasto', path: '/obj-gasto' },
     { label: 'Unidad Administrativa', path: '/unidad-administrativa' },
@@ -13,15 +11,6 @@ function Home() {
     { label: 'Cta Par', path: '/cta-par' },
   ]
 
-  const cards = [
-    { title: 'Entidad', desc: 'Gestión de entidades del sistema de activos fijos.' },
-    { title: 'Objeto de Gasto', desc: 'Administración de objetos de gasto.' },
-    { title: 'Unidad Administrativa', desc: 'Gestión de unidades administrativas.' },
-    { title: 'Mes', desc: 'Control de meses del sistema.' },
-    { title: 'Estado', desc: 'Gestión de estados de activos.' },
-    { title: 'Baja', desc: 'Registro de bajas de activos.' },
-    { title: 'Cta Par', desc: 'Gestión de cuentas par.' },
-  ]
 
   return (
     <div className="vsiaf-root">
@@ -69,14 +58,7 @@ function Home() {
             <figure className="hero-image" role="img" aria-label="Casa de la Moneda - Potosí">
               <span className="hero-watermark">Potosí</span>
             </figure>
-          <div className="home-cards">
-            {cards.map((card) => (
-              <div className="home-card" key={card.title}>
-                <h2>{card.title}</h2>
-                <p>{card.desc}</p>
-              </div>
-            ))}
-          </div>
+
         </main>
 
       </div>
