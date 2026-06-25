@@ -131,6 +131,12 @@ function Entidad() {
             <h1 className="titulo-marca">V.S.I.A.F</h1>
             <p className="subtitulo-marca">Sistema de Activos Fijos</p>
           </div>
+          {/* aqui agregar logo grupal */}
+            <img
+               src="/src/assets/logo_grupo.jpeg"
+               alt="Logo 7 Bits Sin Éxito"
+               className="logo-grupo"
+            />
         </div>
       </header>
 
