@@ -1,20 +1,22 @@
 import './App.css'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import NavBar from './components/NavBar'
-import Sidebar from './components/Sidebar'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Estado from './pages/Estado/Estado'
+import Entidad from './pages/Entidad'
+import UnidadAdmin from './pages/UnidadAdmin'
 
 function App() {
   return (
     <BrowserRouter>
+  
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/estado" element={<Estado />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/entidad" element={<Entidad />} />
+        <Route path="/unidad-administrativa" element={<UnidadAdmin />} />
+        <Route path="/estado" element={<Estado />} />
     </Routes>
     </BrowserRouter>
   )
 }
+
 export default App
