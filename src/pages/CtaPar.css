@@ -65,6 +65,7 @@
 }
 
 .cta-par-home,
+.cta-par-header-actions button,
 .cta-par-actions button,
 .cta-par-row-actions button {
   color: #1b1b1b;
@@ -84,6 +85,27 @@
 .cta-par-home {
   padding: 8px 14px;
   white-space: nowrap;
+}
+
+.cta-par-header-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.cta-par-header-actions button {
+  min-height: 35px;
+  padding: 7px 14px;
+}
+
+.cta-par-header-actions button:disabled,
+.cta-par-actions button:disabled,
+.cta-par-row-actions button:disabled {
+  color: #666;
+  cursor: wait;
+  opacity: 0.78;
 }
 
 .cta-par-layout {
@@ -110,6 +132,25 @@
   padding: 8px;
   text-align: center;
   font-size: 14px;
+}
+
+.cta-par-alert {
+  border: 1px solid #707070;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  padding: 8px;
+  text-align: left;
+}
+
+.cta-par-alert.is-error {
+  background: #f4d1d1;
+  color: #7a1515;
+}
+
+.cta-par-alert.is-success {
+  background: #d8f0d2;
+  color: #185f16;
 }
 
 .cta-par-form {
@@ -203,6 +244,22 @@
 
 .cta-par-table tbody tr:nth-child(even) {
   background: #eef3f8;
+}
+
+.cta-par-table tbody tr {
+  cursor: pointer;
+}
+
+.cta-par-table tbody tr.is-selected {
+  background: #c7ddf4;
+  outline: 2px solid #003399;
+  outline-offset: -2px;
+}
+
+.cta-par-empty {
+  color: #555;
+  font-weight: bold;
+  text-align: center;
 }
 
 .cta-par-status {
