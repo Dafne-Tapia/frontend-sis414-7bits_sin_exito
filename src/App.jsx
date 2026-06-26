@@ -1,5 +1,5 @@
 import './App.css'
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import CtaPar from './pages/CtaPar'
 
@@ -8,14 +8,14 @@ import UnidadAdmin from './pages/UnidadAdmin'
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cta-par" element={<CtaPar />} />
         <Route path="/entidad" element={<Entidad />} />
         <Route path="/unidad-administrativa" element={<UnidadAdmin />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
 export default App
