@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './UnidadAdmin.css'
 
-const API_URL = 'https://proyectosis414-g-7bitssinexito-sskc.onrender.com/unidadadmin'
+const API_URL = 'https://proyectosis414-g-7bitssinexito-2.onrender.com/unidadadmin'
 
 function UnidadAdmin() {
   const [unidades, setUnidades] = useState([])
