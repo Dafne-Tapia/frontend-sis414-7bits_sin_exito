@@ -1,15 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  listarEstados,
+  buscarEstadoPorId,
+  guardarEstado,
+  actualizarEstado,
+  eliminarEstado,
+} from "../../services/estadoService";
 import "./estado.css";
 
-const datosIniciales = [
-  { codestado: 1, nomestado: "Bueno" },
-  { codestado: 2, nomestado: "Regular" },
-  { codestado: 3, nomestado: "Malo" },
-];
-
 function Estado() {
-  const [estados, setEstados] = useState(datosIniciales);
-  const [estadoSeleccionado, setEstadoSeleccionado] = useState(estados[0]);
+  const [estados, setEstados] = useState([]);
+  const [estadoSeleccionado, setEstadoSeleccionado] = useState(null);
   const [idBuscar, setIdBuscar] = useState("");
   const [nomestado, setNomestado] = useState("");
   const [idEditar, setIdEditar] = useState(null);
@@ -17,10 +18,15 @@ function Estado() {
   const [modoFormulario, setModoFormulario] = useState("");
   const [mostrarEliminar, setMostrarEliminar] = useState(false);
 
-  const cargarEstados = () => {
-    setEstados(datosIniciales);
-    setEstadoSeleccionado(datosIniciales[0]);
-  };
+  const cargarEstados = async () => {
+  const datos = await listarEstados();
+  setEstados(datos);
+  setEstadoSeleccionado(null);
+};
+
+useEffect(() => {
+  cargarEstados();
+}, []);
 
   const buscarPorId = () => {
     if (idBuscar === "") { alert("Ingrese un código para buscar"); return; }
