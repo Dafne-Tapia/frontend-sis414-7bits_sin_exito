@@ -8,7 +8,7 @@ import UnidadAdmin from './pages/UnidadAdmin'
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/frontend-sis414-7bits_sin_exito/">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cta-par" element={<CtaPar />} />
