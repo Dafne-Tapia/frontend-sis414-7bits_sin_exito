@@ -1,0 +1,224 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+.estado-page {
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+}
+
+.estado-ventana {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.estado-titlebar {
+  background: #d4d0c8;
+  color: #000;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 2px 4px;
+  border-bottom: 1px solid #808080;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.titlebar-botones {
+  margin-left: auto;
+  display: flex;
+  gap: 2px;
+}
+
+.titlebar-btn {
+  width: 22px;
+  height: 18px;
+  background: #d4d0c8;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #000;
+}
+
+.titlebar-btn:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.titlebar-btn.cerrar {
+  background: #c0392b;
+  color: white;
+  border-color: #e74c3c #7b241c #7b241c #e74c3c;
+}
+
+.titlebar-btn.cerrar:active {
+  background: #a93226;
+}
+
+.tabla-contenedor {
+  flex: 1;
+  overflow-y: auto;
+  background: white;
+}
+
+.estado-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  table-layout: fixed;
+}
+
+.estado-tabla th {
+  background: #d4d0c8;
+  color: #000;
+  padding: 1px 4px;
+  border-right: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+  font-size: 11px;
+  text-align: left;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+}
+
+.estado-tabla td {
+  padding: 0px 4px;
+  border-bottom: 1px solid #c0c0c0;
+  font-size: 11px;
+  color: #000;
+  height: 17px;
+  text-align: left;
+}
+
+.estado-tabla tr { cursor: default; }
+
+.fila-seleccionada td {
+  background: #000080 !important;
+  color: white !important;
+}
+
+.fila-indicador { width: 18px; }
+.col-codigo { width: 80px; }
+.col-nombre { width: 400px; }
+
+.filas-vacias td {
+  border-bottom: 1px solid #c0c0c0;
+  border-right: none;
+  height: 17px;
+}
+
+.botones-panel {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: #d4d0c8;
+  border-top: 1px solid #808080;
+}
+
+.botones-panel button {
+  background: #d4d0c8;
+  color: #000;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 2px 12px;
+  font-size: 11px;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  cursor: pointer;
+  min-width: 60px;
+}
+
+.botones-panel button:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.modal-fondo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 20;
+}
+
+.modal-caja {
+  width: 300px;
+  background: #d4d0c8;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+}
+
+.modal-header {
+  background: linear-gradient(to right, #000080, #1084d0);
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  padding: 3px 6px;
+  font-size: 11px;
+}
+
+.modal-formulario {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-formulario label {
+  font-size: 11px;
+  color: #000;
+}
+
+.modal-formulario input {
+  padding: 2px 4px;
+  border: 2px solid;
+  border-color: #808080 #ffffff #ffffff #808080;
+  font-size: 11px;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  background: white;
+  color: #000;
+}
+
+.modal-botones {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 0 4px 0;
+}
+
+.modal-botones button {
+  background: #d4d0c8;
+  color: #000;
+  border: 2px solid;
+  border-color: #ffffff #808080 #808080 #ffffff;
+  padding: 2px 16px;
+  font-size: 11px;
+  font-family: 'MS Sans Serif', Tahoma, Arial, sans-serif;
+  cursor: pointer;
+  min-width: 60px;
+}
+
+.modal-botones button:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+}
+
+.modal-texto {
+  text-align: center;
+  padding: 12px;
+  font-size: 11px;
+  color: #000;
+}
