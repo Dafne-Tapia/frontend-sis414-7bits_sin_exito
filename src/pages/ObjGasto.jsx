@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './ObjGasto.css'
 
-const API_URL = 'https://proyectosis414-g-7bitssinexito-sskc.onrender.com'
+const API_URL = 'https://proyectosis414-g-7bitssinexito-z8cq.onrender.com'
 
 function ObjGasto() {
     const [objgastos, setObjgastos]   = useState([])
@@ -109,9 +109,8 @@ function ObjGasto() {
                                 <table className="data-table">
                                     <thead>
                                     <tr>
-                                        <th style={{ width: '10%' }}>ID</th>
-                                        <th style={{ width: '14%' }}>GESTIÓN</th>
-                                        <th style={{ width: '14%' }}>PARTIDA</th>
+                                        <th style={{ width: '19%' }}>GESTIÓN</th>
+                                        <th style={{ width: '19%' }}>PARTIDA</th>
                                         <th style={{ width: '62%' }}>DESCRIPCIÓN</th>
                                     </tr>
                                     </thead>
@@ -127,7 +126,6 @@ function ObjGasto() {
                                             }}
                                             style={{ cursor: d ? 'pointer' : 'default' }}
                                         >
-                                            <td>{d?.id ?? ''}</td>
                                             <td>{d?.gestion ?? ''}</td>
                                             <td>{d?.partida ?? ''}</td>
                                             <td>{d?.descrip ?? ''}</td>
