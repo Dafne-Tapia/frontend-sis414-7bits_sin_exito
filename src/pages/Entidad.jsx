@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react'
 import './Entidad.css'
+import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
 
 const API_URL = 'https://proyectosis414-g-7bitssinexito-rwry.onrender.com/entidades'
 
 function Entidad() {
+const navigate = useNavigate();
   const [entidades, setEntidades] = useState([])
   const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState(null)
@@ -142,7 +146,9 @@ function Entidad() {
           <ul className="menu-list">
             {menuItems.map((item) => (
               <li key={item.path}>
-                <a href={item.path} className="menu-btn">{item.label}</a>
+                <Link to={item.path} className="menu-btn">
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
@@ -209,7 +215,7 @@ function Entidad() {
                 <button className="btn" onClick={handleEditar}>Editar</button>
                 <button className="btn" onClick={handleEliminar}>Eliminar</button>
                 <button className="btn" onClick={handleSeleccionar}>Seleccionar</button>
-                <button className="btn" onClick={() => window.location.href = '/'}>Salir</button>
+                <button className="btn" onClick={() => navigate('/')}>Salir</button>
               </nav>
             </div>
 

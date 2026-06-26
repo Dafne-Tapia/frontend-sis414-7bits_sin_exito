@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './Home.css'
 
 function Home() {
@@ -45,9 +46,9 @@ function Home() {
           <ul className="menu-list">
             {menuItems.map((item) => (
               <li key={item.path}>
-                <a href={item.path} className="menu-btn">
+                <Link to={item.path} className="menu-btn">
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
