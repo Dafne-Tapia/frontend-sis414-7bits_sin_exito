@@ -1,7 +1,7 @@
 .baja-wrapper {
     font-family: "Tahoma", "Arial", sans-serif;
     font-size: 13px;
-    background-color: #c0c0c0;
+    background: linear-gradient(180deg, #d9d9d9 0%, #bfbfbf 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -39,7 +39,7 @@
 
 .baja-container {
     margin: 20px auto;
-    width: 700px;
+    width: min(700px, calc(100% - 24px));
     background: #d4d0c8;
     border: 2px solid #fff;
     border-right-color: #808080;
@@ -62,6 +62,8 @@
     border: 1px inset #999;
     padding: 12px;
     margin-bottom: 12px;
+    display: grid;
+    gap: 10px;
 }
 
 .baja-form-row {
@@ -76,15 +78,34 @@
     color: #000080;
     width: 120px;
     text-align: right;
+    flex-shrink: 0;
 }
 
 .baja-form-row input {
     flex: 1;
-    padding: 3px 6px;
+    padding: 6px 8px;
     border: 2px inset #999;
-    font-size: 13px;
+    font-size: 14px;
     font-family: "Tahoma", sans-serif;
     background: white;
+    color: #000;
+    caret-color: #000;
+    outline: none;
+}
+
+.baja-form-row input::placeholder {
+    color: #666;
+}
+
+.baja-form-row input:focus {
+    border-color: #000080;
+    box-shadow: 0 0 0 1px #000080 inset;
+}
+
+.baja-form-row input:read-only {
+    background: #f2f2f2;
+    color: #333;
+    cursor: not-allowed;
 }
 
 .baja-form-btns {
@@ -92,6 +113,7 @@
     justify-content: center;
     gap: 10px;
     margin-top: 8px;
+    flex-wrap: wrap;
 }
 
 .baja-tabla-wrapper {
@@ -125,6 +147,13 @@
     cursor: pointer;
 }
 
+.baja-empty-row td {
+    padding: 14px 10px;
+    text-align: center;
+    color: #555;
+    cursor: default;
+}
+
 .baja-tabla tbody tr:hover {
     background-color: #ddeeff;
 }
@@ -144,6 +173,7 @@
     justify-content: center;
     gap: 8px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 .btn-vsiaf {
@@ -161,17 +191,77 @@
 
 .btn-vsiaf:hover:not(:disabled) {
     background: linear-gradient(to bottom, #2280d8, #1060aa);
+    transform: translateY(-1px);
 }
 
 .btn-vsiaf:disabled {
     background: #aaa;
     cursor: not-allowed;
+    transform: none;
 }
 
 .baja-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size: 12px;
     color: #333;
     border-top: 1px solid #999;
     padding-top: 6px;
     text-align: left;
+    min-height: 22px;
+}
+
+.baja-status-dot {
+    font-size: 18px;
+    line-height: 1;
+}
+
+.baja-status-info {
+    color: #1f3b60;
+}
+
+.baja-status-success {
+    color: #0f5a2a;
+}
+
+.baja-status-error {
+    color: #8a1f1f;
+}
+
+.baja-status-success .baja-status-dot {
+    color: #1a8f43;
+}
+
+.baja-status-error .baja-status-dot {
+    color: #c0392b;
+}
+
+.baja-status-info .baja-status-dot {
+    color: #1d63b5;
+}
+
+@media (max-width: 760px) {
+    .baja-container {
+        margin: 12px auto;
+        padding: 12px;
+    }
+
+    .baja-form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .baja-form-row label {
+        width: auto;
+        text-align: left;
+    }
+
+    .baja-botones {
+        justify-content: stretch;
+    }
+
+    .btn-vsiaf {
+        flex: 1 1 120px;
+    }
 }

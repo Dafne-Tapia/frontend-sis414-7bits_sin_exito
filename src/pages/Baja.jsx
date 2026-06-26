@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./Baja.css";
 
 const API_URL = "https://proyectosis414-g-7bitssinexito-rh8p.onrender.com/bajas";
@@ -9,75 +9,136 @@ function Baja() {
     const [form, setForm] = useState({ codbaja: "", descbaja: "" });
     const [modo, setModo] = useState("");
     const [mensaje, setMensaje] = useState("Listo.");
+    const [mensajeTipo, setMensajeTipo] = useState("info");
 
-    useEffect(() => {
-        cargarBajas();
-    }, []);
+    const cargarBajas = async (mensajeExito = "Listo.", mensajeError = "Error al cargar datos.") => {
+        setMensaje("Cargando bajas...");
+        setMensajeTipo("info");
 
-    const cargarBajas = async () => {
-        setMensaje("Cargando...");
         try {
             const res = await fetch(API_URL);
+            if (!res.ok) {
+                setBajas([]);
+                setMensaje(`${mensajeError} (HTTP ${res.status})`);
+                setMensajeTipo("error");
+                return false;
+            }
+
             const data = await res.json();
-            setBajas(data);
-            setMensaje("Listo.");
+            setBajas(Array.isArray(data) ? data : []);
+            setMensaje(mensajeExito);
+            setMensajeTipo("success");
+            return true;
         } catch {
-            setMensaje("Error al cargar datos.");
+            setBajas([]);
+            setMensaje(mensajeError);
+            setMensajeTipo("error");
+            return false;
         }
     };
+
+    useEffect(() => {
+        const timer = window.setTimeout(() => {
+            void cargarBajas();
+        }, 0);
+
+        return () => window.clearTimeout(timer);
+    }, []);
 
     const handleNuevo = () => {
         setForm({ codbaja: "", descbaja: "" });
         setSeleccionado(null);
         setModo("nuevo");
+        setMensaje("Escribe el codigo y la descripcion.");
+        setMensajeTipo("info");
     };
 
     const handleEditar = () => {
         if (!seleccionado) return;
-        setForm({ codbaja: seleccionado.codbaja, descbaja: seleccionado.descbaja });
+
+        setForm({
+            codbaja: seleccionado.codbaja ?? "",
+            descbaja: seleccionado.descbaja ?? "",
+        });
         setModo("editar");
+        setMensaje("Edita la descripcion y guarda los cambios.");
+        setMensajeTipo("info");
     };
 
     const handleEliminar = async () => {
         if (!seleccionado) return;
-        if (!window.confirm("¿Eliminar esta baja?")) return;
-        setMensaje("Eliminando...");
+        if (!window.confirm("Eliminar esta baja?")) return;
+
+        setMensaje("Eliminando baja...");
+        setMensajeTipo("info");
+
         try {
-            await fetch(`${API_URL}/${seleccionado.codbaja}`, { method: "DELETE" });
+            const res = await fetch(`${API_URL}/${seleccionado.codbaja}`, { method: "DELETE" });
+            if (!res.ok) {
+                setMensaje(`No se pudo eliminar la baja. (HTTP ${res.status})`);
+                setMensajeTipo("error");
+                return;
+            }
+
             setSeleccionado(null);
             setModo("");
-            await cargarBajas();
+            setForm({ codbaja: "", descbaja: "" });
+            await cargarBajas("Baja eliminada correctamente.");
         } catch {
-            setMensaje("Error al eliminar.");
+            setMensaje("No se pudo eliminar la baja.");
+            setMensajeTipo("error");
         }
     };
 
     const handleGuardar = async () => {
-        if (!form.descbaja.trim()) {
-            setMensaje("La descripción no puede estar vacía.");
+        const codbaja = String(form.codbaja).trim();
+        const descbaja = String(form.descbaja).trim();
+
+        if (modo === "nuevo" && !codbaja) {
+            setMensaje("El codigo no puede estar vacio.");
+            setMensajeTipo("error");
             return;
         }
-        setMensaje("Guardando...");
+
+        if (!descbaja) {
+            setMensaje("La descripcion no puede estar vacia.");
+            setMensajeTipo("error");
+            return;
+        }
+
+        setMensaje("Guardando baja...");
+        setMensajeTipo("info");
+
         try {
+            const url = modo === "editar" && seleccionado
+                ? `${API_URL}/${seleccionado.codbaja}`
+                : API_URL;
+            const method = modo === "editar" ? "PUT" : "POST";
+
+            const payload = { descbaja };
             if (modo === "nuevo") {
-                await fetch(API_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ descbaja: form.descbaja }),
-                });
-            } else if (modo === "editar") {
-                await fetch(`${API_URL}/${seleccionado.codbaja}`, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ descbaja: form.descbaja }),
-                });
+                payload.codbaja = codbaja;
             }
+
+            const res = await fetch(url, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) {
+                setMensaje(`No se pudo guardar la baja. (HTTP ${res.status})`);
+                setMensajeTipo("error");
+                return;
+            }
+
             setModo("");
             setForm({ codbaja: "", descbaja: "" });
             setSeleccionado(null);
-            await cargarBajas();
+            await cargarBajas("Baja guardada correctamente.");
         } catch {
-            setMensaje("Error al guardar.");
+            setMensaje("No se pudo guardar la baja.");
+            setMensajeTipo("error");
         }
     };
 
@@ -86,28 +147,43 @@ function Baja() {
         setForm({ codbaja: "", descbaja: "" });
         setSeleccionado(null);
         setMensaje("Listo.");
+        setMensajeTipo("info");
     };
+
+    const mostrarFormulario = modo === "nuevo" || modo === "editar";
 
     return (
         <div className="baja-wrapper">
             <div className="baja-header">
-                <span className="baja-header-icon">■</span>
+                <span className="baja-header-icon">#</span>
                 <span className="baja-header-title">Baja</span>
-                <div className="baja-header-controls">
-                    <span>–</span><span>□</span><span>✕</span>
+                <div className="baja-header-controls" aria-hidden="true">
+                    <span>-</span>
+                    <span>[]</span>
+                    <span>x</span>
                 </div>
             </div>
             <div className="baja-container">
-                <h2 className="baja-titulo">GESTIÓN DE BAJAS</h2>
-                {(modo === "nuevo" || modo === "editar") && (
+                <h2 className="baja-titulo">GESTION DE BAJAS</h2>
+                {mostrarFormulario && (
                     <div className="baja-form">
                         <div className="baja-form-row">
-                            <label>DESCRIPCIÓN:</label>
+                            <label>CODIGO:</label>
+                            <input
+                                type="text"
+                                value={form.codbaja}
+                                onChange={(e) => setForm({ ...form, codbaja: e.target.value })}
+                                placeholder="Ingrese codigo de baja"
+                                readOnly={modo === "editar"}
+                            />
+                        </div>
+                        <div className="baja-form-row">
+                            <label>DESCRIPCION:</label>
                             <input
                                 type="text"
                                 value={form.descbaja}
                                 onChange={(e) => setForm({ ...form, descbaja: e.target.value })}
-                                placeholder="Ingrese descripción de baja"
+                                placeholder="Ingrese descripcion de baja"
                             />
                         </div>
                         <div className="baja-form-btns">
@@ -116,41 +192,47 @@ function Baja() {
                         </div>
                     </div>
                 )}
+
                 <div className="baja-tabla-wrapper">
                     <table className="baja-tabla">
                         <thead>
-                        <tr>
-                            <th>CÓD.</th>
-                            <th>DESCRIPCIÓN DE BAJA</th>
-                        </tr>
+                            <tr>
+                                <th>COD.</th>
+                                <th>DESCRIPCION DE BAJA</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {bajas.length === 0 ? (
-                            [...Array(8)].map((_, i) => (
-                                <tr key={i}><td>&nbsp;</td><td>&nbsp;</td></tr>
-                            ))
-                        ) : (
-                            bajas.map((b) => (
-                                <tr
-                                    key={b.codbaja}
-                                    className={seleccionado?.codbaja === b.codbaja ? "fila-seleccionada" : ""}
-                                    onClick={() => setSeleccionado(b)}
-                                >
-                                    <td>{b.codbaja}</td>
-                                    <td>{b.descbaja}</td>
+                            {bajas.length === 0 ? (
+                                <tr className="baja-empty-row">
+                                    <td colSpan="2">No hay bajas registradas.</td>
                                 </tr>
-                            ))
-                        )}
+                            ) : (
+                                bajas.map((b) => (
+                                    <tr
+                                        key={b.codbaja}
+                                        className={seleccionado?.codbaja === b.codbaja ? "fila-seleccionada" : ""}
+                                        onClick={() => setSeleccionado(b)}
+                                    >
+                                        <td>{b.codbaja}</td>
+                                        <td>{b.descbaja}</td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
+
                 <div className="baja-botones">
                     <button className="btn-vsiaf" onClick={handleNuevo}>Nuevo</button>
                     <button className="btn-vsiaf" onClick={handleEditar} disabled={!seleccionado}>Editar</button>
                     <button className="btn-vsiaf" onClick={handleEliminar} disabled={!seleccionado}>Eliminar</button>
                     <button className="btn-vsiaf" onClick={() => window.history.back()}>Salir</button>
                 </div>
-                <div className="baja-status">🔄 {mensaje}</div>
+
+                <div className={`baja-status baja-status-${mensajeTipo}`}>
+                    <span className="baja-status-dot">*</span>
+                    <span>{mensaje}</span>
+                </div>
             </div>
         </div>
     );
