@@ -50,30 +50,39 @@ useEffect(() => {
     setMostrarFormulario(true);
   };
 
-  const guardar = (e) => {
-    e.preventDefault();
-    if (nomestado.trim() === "") { alert("Ingrese el nombre del estado"); return; }
+  const guardar = async (e) => {
+  e.preventDefault();
+  if (nomestado.trim() === "") { alert("Ingrese el nombre del estado"); return; }
+  try {
     if (modoFormulario === "nuevo") {
-      const nuevoEstado = { codestado: estados.length + 1, nomestado };
-      setEstados([...estados, nuevoEstado]);
+      await guardarEstado({ nomestado });
     } else {
-      setEstados(estados.map((e) => e.codestado === idEditar ? { ...e, nomestado } : e));
+      await actualizarEstado(idEditar, { codestado: idEditar, nomestado });
     }
+    await cargarEstados();
     setMostrarFormulario(false);
     setNomestado("");
     setIdEditar(null);
-  };
+  } catch (error) {
+    alert("Error al guardar: " + error.message);
+  }
+};
 
   const eliminarSeleccionado = () => {
     if (!estadoSeleccionado) { alert("Seleccione un estado"); return; }
     setMostrarEliminar(true);
   };
 
-  const confirmarEliminar = () => {
-    setEstados(estados.filter((e) => e.codestado !== estadoSeleccionado.codestado));
+  const confirmarEliminar = async () => {
+  try {
+    await eliminarEstado(estadoSeleccionado.codestado);
+    await cargarEstados();
     setMostrarEliminar(false);
     setEstadoSeleccionado(null);
-  };
+  } catch (error) {
+    alert("Error al eliminar: " + error.message);
+  }
+};
 
   const seleccionarEstado = () => {
     if (!estadoSeleccionado) { alert("Seleccione un estado"); return; }
