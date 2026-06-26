@@ -8,14 +8,14 @@ import UnidadAdmin from './pages/UnidadAdmin'
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cta-par" element={<CtaPar />} />
         <Route path="/entidad" element={<Entidad />} />
         <Route path="/unidad-administrativa" element={<UnidadAdmin />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 export default App
