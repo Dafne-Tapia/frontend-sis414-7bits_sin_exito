@@ -154,6 +154,18 @@ function Baja() {
 
     return (
         <div className="baja-wrapper">
+            <div className="baja-brand-bar">
+                <div className="baja-brand-mark" aria-hidden="true">
+                    <span className="mark-red" />
+                    <span className="mark-yellow" />
+                    <span className="mark-green" />
+                    <span className="mark-white" />
+                </div>
+                <div className="baja-brand-copy">
+                    <div className="baja-brand-title">V.S.I.A.F</div>
+                    <div className="baja-brand-subtitle">Sistema de Activos Fijos</div>
+                </div>
+            </div>
             <div className="baja-header">
                 <span className="baja-header-icon">#</span>
                 <span className="baja-header-title">Baja</span>
@@ -232,6 +244,13 @@ function Baja() {
                 <div className={`baja-status baja-status-${mensajeTipo}`}>
                     <span className="baja-status-dot">*</span>
                     <span>{mensaje}</span>
+                </div>
+            </div>
+            <div className="baja-footer" aria-hidden="true">
+                <div className="baja-footer-text">
+                    <div>VSIAF version 2.0</div>
+                    <div>Copyright © 1999-2012 DGSGIF</div>
+                    <div>Todos los derechos reservados</div>
                 </div>
             </div>
         </div>
