@@ -300,3 +300,17 @@
   font-size: 11px; color: #990000; background: #ffe0e0;
   border: 1px solid #cc0000; padding: 3px 6px; margin-bottom: 8px;
 }
+.encabezado-marca {
+  position: relative;
+  overflow: hidden;
+ }
+.logo-grupo {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 50%;
+}
