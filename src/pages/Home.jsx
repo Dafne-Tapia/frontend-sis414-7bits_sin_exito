@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import logoGrupo from '../assets/logo_grupo.jpeg'
 import './Home.css'
 
 function Home() {
@@ -36,10 +37,10 @@ function Home() {
           </div>
           {/* aqui agregar logo grupal */}
             <img
-                src="/src/assets/logo_grupo.jpeg"
-                alt="Logo 7 Bits Sin Éxito"
+                src={logoGrupo}
+                alt="Logo 7 Bits Sin Exito"
                 className="logo-grupo"
-              />
+            />
 
         </div>
       </header>

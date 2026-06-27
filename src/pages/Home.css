@@ -73,8 +73,9 @@
 .bandera {
   width: 220px;
   height: 110px;
-  background-image: url('../assets/banderaBol.png');
-  background-size: cover;
+  background-image: url('/frontend-sis414-7bits_sin_exito/assets/banderaBol.png');
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
   border: 2px solid rgba(255,255,255,0.2);
   flex-shrink: 0;
