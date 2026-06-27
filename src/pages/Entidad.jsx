@@ -72,6 +72,7 @@ function Entidad() {
     }
   }
 
+
   const handleSeleccionar = async () => {
     if (!selected) return setStatusMsg('Seleccione una fila primero.', 'error')
     setStatusMsg(`Gestión: ${selected.gestion} | Entidad: ${selected.entidad} | ${selected.descEnt} | ${selected.siglaEnt}`, 'ok')
@@ -176,6 +177,7 @@ function Entidad() {
                           <th style={{ width: '18%' }}>SIGLA</th>
                         </tr>
                       </thead>
+
                       <tbody>
                         {loading ? (
                           <tr><td colSpan="4" style={{ textAlign: 'center' }}>Cargando...</td></tr>
