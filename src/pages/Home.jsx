@@ -28,7 +28,11 @@ function Home() {
       {/* Encabezado con logo */}
       <header className="encabezado-marca">
         <div className="contenido-marca">
-          <div className="bandera" role="img" aria-label="Bandera de Bolivia" />
+          <img
+              src="/src/assets/banderaBol.png"
+              alt="Bandera de Bolivia"
+              className="bandera"
+          />
           <div className="texto-marca">
             <h1 className="titulo-marca">V.S.I.A.F</h1>
             <p className="subtitulo-marca">Sistema de Activos Fijos</p>
@@ -62,9 +66,9 @@ function Home() {
 
         {/* Área de contenido con tarjetas */}
         <main className="content-area">
-            <figure className="hero-image" role="img" aria-label="Casa de la Moneda - Potosí">
-              <span className="hero-watermark">Potosí</span>
-            </figure>
+          <div className="hero-image" role="img" aria-label="Casa de la Moneda - Potosí">
+            <span className="hero-watermark">Potosí</span>
+          </div>
 
         </main>
 
