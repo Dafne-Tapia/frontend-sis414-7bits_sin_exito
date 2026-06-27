@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { listarEstados, guardarEstado, actualizarEstado, eliminarEstado } from '../../services/estadoService'
 import './estado.css'
 import { Link, useNavigate } from 'react-router-dom'
+import banderaBol from '../../assets/banderaBol.png';
 
 function Estado() {
   const navigate = useNavigate()
@@ -112,7 +113,11 @@ function Estado() {
 
       <header className="encabezado-marca">
         <div className="contenido-marca">
-          <div className="bandera" />
+          <img 
+            src={banderaBol} 
+            alt="Bandera de Bolivia" 
+            className="bandera"
+          /> 
           <div className="texto-marca">
             <h1 className="titulo-marca">V.S.I.A.F</h1>
             <p className="subtitulo-marca">Sistema de Activos Fijos</p>
@@ -185,7 +190,7 @@ function Estado() {
                 <button className="btn" onClick={handleEditar}>Editar</button>
                 <button className="btn" onClick={handleEliminar}>Eliminar</button>
                 <button className="btn" onClick={handleSeleccionar}>Seleccionar</button>
-                <button className="btn" onClick={() => window.location.href = '/'}>Salir</button>
+                <button className="btn" onClick={() => navigate('/')}>Salir</button>
               </nav>
             </div>
             <footer className={`status-bar ${status.tipo}`}>
