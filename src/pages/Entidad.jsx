@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './Entidad.css'
+import logoGrupo from '../assets/logo_grupo.jpeg'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
@@ -137,8 +138,8 @@ const navigate = useNavigate();
           </div>
           {/* aqui agregar logo grupal */}
             <img
-               src="/src/assets/logo_grupo.jpeg"
-               alt="Logo 7 Bits Sin Éxito"
+               src={logoGrupo}
+               alt="Logo 7 Bits Sin Exito"
                className="logo-grupo"
             />
         </div>
