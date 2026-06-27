@@ -1,189 +1,248 @@
-import { useEffect, useState } from "react";
-import {
-  listarEstados,
-  buscarEstadoPorId,
-  guardarEstado,
-  actualizarEstado,
-  eliminarEstado,
-} from "../../services/estadoService";
-import "./estado.css";
+import { useEffect, useState } from 'react'
+import { listarEstados, guardarEstado, actualizarEstado, eliminarEstado } from '../../services/estadoService'
+import './estado.css'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Estado() {
-  const [estados, setEstados] = useState([]);
-  const [estadoSeleccionado, setEstadoSeleccionado] = useState(null);
-  const [idBuscar, setIdBuscar] = useState("");
-  const [nomestado, setNomestado] = useState("");
-  const [idEditar, setIdEditar] = useState(null);
-  const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [modoFormulario, setModoFormulario] = useState("");
-  const [mostrarEliminar, setMostrarEliminar] = useState(false);
+  const navigate = useNavigate()
+  const [estados, setEstados] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [selected, setSelected] = useState(null)
+  const [showModal, setShowModal] = useState(false)
+  const [modalMode, setModalMode] = useState('nuevo')
+  const [form, setForm] = useState({ nomestado: '' })
+  const [status, setStatus] = useState({ msg: 'Listo.', tipo: '' })
+  const [modalError, setModalError] = useState('')
+  const [showEliminar, setShowEliminar] = useState(false)
 
-  const cargarEstados = async () => {
-  const datos = await listarEstados();
-  setEstados(datos);
-  setEstadoSeleccionado(null);
-};
+  const menuItems = [
+    { label: 'Entidad', path: '/entidad' },
+    { label: 'Objeto de Gasto', path: '/obj-gasto' },
+    { label: 'Unidad Administrativa', path: '/unidad-administrativa' },
+    { label: 'Mes', path: '/mes' },
+    { label: 'Estado', path: '/estado' },
+    { label: 'Baja', path: '/baja' },
+    { label: 'Cta Par', path: '/cta-par' },
+  ]
 
-useEffect(() => {
-  cargarEstados();
-}, []);
+  const setStatusMsg = (msg, tipo = '') => setStatus({ msg, tipo })
 
-  const buscarPorId = () => {
-    if (idBuscar === "") { alert("Ingrese un código para buscar"); return; }
-    const encontrado = estados.find((e) => e.codestado === parseInt(idBuscar));
-    if (encontrado) { setEstados([encontrado]); setEstadoSeleccionado(encontrado); }
-    else alert("No se encontró un estado con ese ID");
-  };
-
-  const nuevo = () => {
-    setModoFormulario("nuevo");
-    setIdEditar(null);
-    setNomestado("");
-    setMostrarFormulario(true);
-  };
-
-  const editarSeleccionado = () => {
-    if (!estadoSeleccionado) { alert("Seleccione un estado"); return; }
-    setModoFormulario("editar");
-    setIdEditar(estadoSeleccionado.codestado);
-    setNomestado(estadoSeleccionado.nomestado);
-    setMostrarFormulario(true);
-  };
-
-  const guardar = async (e) => {
-  e.preventDefault();
-  if (nomestado.trim() === "") { alert("Ingrese el nombre del estado"); return; }
-  try {
-    if (modoFormulario === "nuevo") {
-      await guardarEstado({ nomestado });
-    } else {
-      await actualizarEstado(idEditar, { codestado: idEditar, nomestado });
+  const cargarLista = async () => {
+    setStatusMsg('Cargando...', 'loading')
+    try {
+      const data = await listarEstados()
+      setEstados(data)
+      setStatusMsg(`${data.length} registro(s) cargado(s).`, 'ok')
+    } catch (e) {
+      setEstados([])
+      setStatusMsg(`Error al cargar: ${e.message}`, 'error')
+    } finally {
+      setLoading(false)
+      setSelected(null)
     }
-    await cargarEstados();
-    setMostrarFormulario(false);
-    setNomestado("");
-    setIdEditar(null);
-  } catch (error) {
-    alert("Error al guardar: " + error.message);
   }
-};
 
-  const eliminarSeleccionado = () => {
-    if (!estadoSeleccionado) { alert("Seleccione un estado"); return; }
-    setMostrarEliminar(true);
-  };
+  useEffect(() => { cargarLista() }, [])
+
+  const handleNuevo = () => {
+    setForm({ nomestado: '' })
+    setModalMode('nuevo')
+    setModalError('')
+    setShowModal(true)
+  }
+
+  const handleEditar = () => {
+    if (!selected) return setStatusMsg('Seleccione una fila para editar.', 'error')
+    setForm({ nomestado: selected.nomestado })
+    setModalMode('editar')
+    setModalError('')
+    setShowModal(true)
+  }
+
+  const handleEliminar = () => {
+    if (!selected) return setStatusMsg('Seleccione una fila para eliminar.', 'error')
+    setShowEliminar(true)
+  }
 
   const confirmarEliminar = async () => {
-  try {
-    await eliminarEstado(estadoSeleccionado.codestado);
-    await cargarEstados();
-    setMostrarEliminar(false);
-    setEstadoSeleccionado(null);
-  } catch (error) {
-    alert("Error al eliminar: " + error.message);
+    try {
+      await eliminarEstado(selected.codestado)
+      await cargarLista()
+      setShowEliminar(false)
+      setStatusMsg('Estado eliminado correctamente.', 'ok')
+    } catch (e) {
+      setStatusMsg(`Error al eliminar: ${e.message}`, 'error')
+    }
   }
-};
 
-  const seleccionarEstado = () => {
-    if (!estadoSeleccionado) { alert("Seleccione un estado"); return; }
-    alert("Estado seleccionado: " + estadoSeleccionado.codestado + " - " + estadoSeleccionado.nomestado);
-  };
+  const handleSeleccionar = () => {
+    if (!selected) return setStatusMsg('Seleccione una fila primero.', 'error')
+    setStatusMsg(`Código: ${selected.codestado} | Nombre: ${selected.nomestado}`, 'ok')
+  }
 
-  const salir = () => alert("Saliendo de la administración de Estado");
+  const handleGuardar = async () => {
+    if (form.nomestado.trim() === '') return setModalError('Ingrese el nombre del estado')
+    try {
+      if (modalMode === 'nuevo') {
+        await guardarEstado({ nomestado: form.nomestado.trim() })
+      } else {
+        await actualizarEstado(selected.codestado, { codestado: selected.codestado, nomestado: form.nomestado.trim() })
+      }
+      setShowModal(false)
+      await cargarLista()
+      setStatusMsg('Operación realizada correctamente.', 'ok')
+    } catch (e) {
+      setModalError(e.message)
+    }
+  }
+
+  const filas = Math.max(estados.length, 9)
+  const rows = Array.from({ length: filas }, (_, i) => estados[i] || null)
 
   return (
-    <div className="estado-page">
-      <div className="estado-ventana">
-
-        <div className="estado-titlebar">
-          <span className="estado-titlebar-icon">▦</span>
-          Estado
-          <div className="titlebar-botones">
-            <button className="titlebar-btn">─</button>
-            <button className="titlebar-btn">□</button>
-            <button className="titlebar-btn">✕</button>
-          </div>
-        </div>
-
-        <div className="tabla-contenedor">
-          <table className="estado-tabla">
-            <thead>
-              <tr>
-                <th className="fila-indicador"></th>
-                <th className="col-codigo">Codestado</th>
-                <th className="col-nombre">Nomestado</th>
-              </tr>
-            </thead>
-            <tbody>
-              {estados.map((estado) => (
-                <tr
-                  key={estado.codestado}
-                  onClick={() => setEstadoSeleccionado(estado)}
-                  className={estadoSeleccionado?.codestado === estado.codestado ? "fila-seleccionada" : ""}
-                >
-                  <td className="fila-indicador">
-                    {estadoSeleccionado?.codestado === estado.codestado ? "▶" : ""}
-                  </td>
-                  <td>{estado.codestado}</td>
-                  <td>{estado.nomestado}</td>
-                </tr>
-              ))}
-              {Array.from({ length: 50 }).map((_, i) => (
-                <tr key={`vacio-${i}`} className="filas-vacias">
-                  <td></td><td></td><td></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="botones-panel">
-          <button type="button" onClick={nuevo}>Nuevo</button>
-          <button type="button" onClick={editarSeleccionado}>Editar</button>
-          <button type="button" onClick={eliminarSeleccionado}>Eliminar</button>
-          <button type="button" onClick={seleccionarEstado}>Seleccionar</button>
-          <button type="button" onClick={salir}>Salir</button>
+    <div className="vsiaf-root">
+      <div className="win-titlebar">
+        <span>&#9632; SISTEMA DE ACTIVOS FIJOS - ESTADO</span>
+        <div className="win-controls">
+          <button>&#8211;</button>
+          <button>&#9633;</button>
+          <button className="cerrar">&#x2715;</button>
         </div>
       </div>
 
-      {mostrarFormulario && (
-        <div className="modal-fondo">
-          <div className="modal-caja">
-            <div className="modal-header">
-              {modoFormulario === "nuevo" ? "NUEVO ESTADO" : "EDITAR ESTADO"}
+      <header className="encabezado-marca">
+        <div className="contenido-marca">
+          <div className="bandera" />
+          <div className="texto-marca">
+            <h1 className="titulo-marca">V.S.I.A.F</h1>
+            <p className="subtitulo-marca">Sistema de Activos Fijos</p>
+          </div>
+        </div>
+      </header>
+
+      <div className="app-layout">
+        <nav className="sidebar">
+          <h2 className="menu-title">MENU PRINCIPAL</h2>
+          <ul className="menu-list">
+            {menuItems.map((item) => (
+              <li key={item.path}>
+                <a href={item.path} className="menu-btn">{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <main className="content-area">
+          <div className="window-frame">
+            <div className="window-titlebar">
+              <span>&#9632; Estados</span>
             </div>
-            <form onSubmit={guardar} className="modal-formulario">
-              <label>Nombre del estado:</label>
-              <input
-                type="text"
-                placeholder="Ingrese nombre"
-                value={nomestado}
-                onChange={(e) => setNomestado(e.target.value)}
-                autoFocus
-              />
-              <div className="modal-botones">
-                <button type="submit">{modoFormulario === "nuevo" ? "Guardar" : "Actualizar"}</button>
-                <button type="button" onClick={() => setMostrarFormulario(false)}>Cancelar</button>
+            <div className="window-body">
+              <h2 className="section-title">GESTIÓN DE ESTADOS</h2>
+              <div className="panel">
+                <div className="table-wrapper">
+                  <div className="table-scroll-area">
+                    <table className="data-table">
+                      <thead>
+                        <tr>
+                          <th style={{ width: '30%' }}>Codestado</th>
+                          <th style={{ width: '70%' }}>Nomestado</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {loading ? (
+                          <tr><td colSpan="2" style={{ textAlign: 'center' }}>Cargando...</td></tr>
+                        ) : (
+                          rows.map((e, i) => (
+                            <tr
+                              key={i}
+                              className={selected?.codestado === e?.codestado ? 'selected' : ''}
+                              onClick={() => e && setSelected(e)}
+                              style={{ cursor: e ? 'pointer' : 'default' }}
+                            >
+                              <td>{e?.codestado ?? ''}</td>
+                              <td>{e?.nomestado ?? ''}</td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                  <aside className="vscrollbar">
+                    <button className="vscroll-btn">&#9650;</button>
+                    <div className="vscroll-track"></div>
+                    <button className="vscroll-btn">&#9660;</button>
+                  </aside>
+                </div>
+                <div className="hscroll-bar">
+                  <button className="hscroll-btn">&#9664;</button>
+                  <div className="hscroll-track"></div>
+                  <button className="hscroll-btn">&#9654;</button>
+                </div>
               </div>
-            </form>
+              <nav className="button-bar">
+                <button className="btn" onClick={handleNuevo}>Nuevo</button>
+                <button className="btn" onClick={handleEditar}>Editar</button>
+                <button className="btn" onClick={handleEliminar}>Eliminar</button>
+                <button className="btn" onClick={handleSeleccionar}>Seleccionar</button>
+                <button className="btn" onClick={() => window.location.href = '/'}>Salir</button>
+              </nav>
+            </div>
+            <footer className={`status-bar ${status.tipo}`}>
+              {status.tipo === 'loading' && <span className="spinner"></span>}
+              {status.msg}
+            </footer>
+          </div>
+        </main>
+      </div>
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-window">
+            <header className="modal-titlebar">
+              <span>{modalMode === 'nuevo' ? 'Nuevo Estado' : 'Editar Estado'}</span>
+              <button className="close-btn" onClick={() => setShowModal(false)}>✕</button>
+            </header>
+            <div className="modal-body">
+              {modalError && <p className="modal-error">{modalError}</p>}
+              <label className="modal-field">
+                <span>NOMBRE DEL ESTADO</span>
+                <input
+                  type="text"
+                  value={form.nomestado}
+                  onChange={(e) => setForm({ ...form, nomestado: e.target.value })}
+                  placeholder="Ingrese nombre"
+                  autoFocus
+                />
+              </label>
+            </div>
+            <footer className="modal-footer">
+              <button className="btn" onClick={handleGuardar}>Aceptar</button>
+              <button className="btn" onClick={() => setShowModal(false)}>Cancelar</button>
+            </footer>
           </div>
         </div>
       )}
 
-      {mostrarEliminar && (
-        <div className="modal-fondo">
-          <div className="modal-caja">
-            <div className="modal-header">ELIMINAR ESTADO</div>
-            <p className="modal-texto">¿Eliminar <b>{estadoSeleccionado?.nomestado}</b>?</p>
-            <div className="modal-botones">
-              <button type="button" onClick={confirmarEliminar}>Sí, eliminar</button>
-              <button type="button" onClick={() => setMostrarEliminar(false)}>Cancelar</button>
+      {showEliminar && (
+        <div className="modal-overlay">
+          <div className="modal-window">
+            <header className="modal-titlebar">
+              <span>Eliminar Estado</span>
+              <button className="close-btn" onClick={() => setShowEliminar(false)}>✕</button>
+            </header>
+            <div className="modal-body">
+              <p style={{ fontSize: '13px' }}>¿Eliminar el estado <b>{selected?.nomestado}</b>?</p>
             </div>
+            <footer className="modal-footer">
+              <button className="btn" onClick={confirmarEliminar}>Sí, eliminar</button>
+              <button className="btn" onClick={() => setShowEliminar(false)}>Cancelar</button>
+            </footer>
           </div>
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default Estado;
+export default Estado
