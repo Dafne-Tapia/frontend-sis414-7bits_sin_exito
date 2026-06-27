@@ -131,7 +131,7 @@ function Estado() {
           <ul className="menu-list">
             {menuItems.map((item) => (
               <li key={item.path}>
-                <a href={item.path} className="menu-btn">{item.label}</a>
+                <Link to={item.path} className="menu-btn">{item.label}</Link>
               </li>
             ))}
           </ul>
