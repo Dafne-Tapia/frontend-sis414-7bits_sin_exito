@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react'
-import './Entidad.css'
+import { listarEstados, guardarEstado, actualizarEstado, eliminarEstado } from '../../services/estadoService'
+import './estado.css'
+import { Link, useNavigate } from 'react-router-dom'
 
-const API_URL = 'https://proyectosis414-g-7bitssinexito-rwry.onrender.com/entidades'
-
-function Entidad() {
-  const [entidades, setEntidades] = useState([])
+function Estado() {
+  const navigate = useNavigate()
+  const [estados, setEstados] = useState([])
   const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [modalMode, setModalMode] = useState('nuevo')
-  const [form, setForm] = useState({ gestion: '', entidad: '', descEnt: '', siglaEnt: '' })
+  const [form, setForm] = useState({ nomestado: '' })
   const [status, setStatus] = useState({ msg: 'Listo.', tipo: '' })
   const [modalError, setModalError] = useState('')
+  const [showEliminar, setShowEliminar] = useState(false)
 
   const menuItems = [
     { label: 'Entidad', path: '/entidad' },
@@ -23,20 +25,16 @@ function Entidad() {
     { label: 'Cta Par', path: '/cta-par' },
   ]
 
-  useEffect(() => { cargarLista() }, [])
-
   const setStatusMsg = (msg, tipo = '') => setStatus({ msg, tipo })
 
   const cargarLista = async () => {
     setStatusMsg('Cargando...', 'loading')
     try {
-      const res = await fetch(API_URL)
-      if (!res.ok) throw new Error(`Error: ${res.status}`)
-      const data = await res.json()
-      setEntidades(data)
+      const data = await listarEstados()
+      setEstados(data)
       setStatusMsg(`${data.length} registro(s) cargado(s).`, 'ok')
     } catch (e) {
-      setEntidades([])
+      setEstados([])
       setStatusMsg(`Error al cargar: ${e.message}`, 'error')
     } finally {
       setLoading(false)
@@ -44,8 +42,10 @@ function Entidad() {
     }
   }
 
+  useEffect(() => { cargarLista() }, [])
+
   const handleNuevo = () => {
-    setForm({ gestion: '', entidad: '', descEnt: '', siglaEnt: '' })
+    setForm({ nomestado: '' })
     setModalMode('nuevo')
     setModalError('')
     setShowModal(true)
@@ -53,52 +53,40 @@ function Entidad() {
 
   const handleEditar = () => {
     if (!selected) return setStatusMsg('Seleccione una fila para editar.', 'error')
-    setForm({ gestion: selected.gestion, entidad: selected.entidad, descEnt: selected.descEnt, siglaEnt: selected.siglaEnt })
+    setForm({ nomestado: selected.nomestado })
     setModalMode('editar')
     setModalError('')
     setShowModal(true)
   }
 
-  const handleEliminar = async () => {
+  const handleEliminar = () => {
     if (!selected) return setStatusMsg('Seleccione una fila para eliminar.', 'error')
-    if (!confirm(`¿Eliminar entidad ${selected.entidad}?`)) return
+    setShowEliminar(true)
+  }
+
+  const confirmarEliminar = async () => {
     try {
-      const res = await fetch(`${API_URL}/${selected.id}`, { method: 'DELETE' })
-      if (!res.ok) throw new Error('Error al eliminar')
+      await eliminarEstado(selected.codestado)
       await cargarLista()
-      setStatusMsg('Entidad eliminada correctamente.', 'ok')
+      setShowEliminar(false)
+      setStatusMsg('Estado eliminado correctamente.', 'ok')
     } catch (e) {
       setStatusMsg(`Error al eliminar: ${e.message}`, 'error')
     }
   }
 
-  const handleSeleccionar = async () => {
+  const handleSeleccionar = () => {
     if (!selected) return setStatusMsg('Seleccione una fila primero.', 'error')
-    setStatusMsg(`Gestión: ${selected.gestion} | Entidad: ${selected.entidad} | ${selected.descEnt} | ${selected.siglaEnt}`, 'ok')
+    setStatusMsg(`Código: ${selected.codestado} | Nombre: ${selected.nomestado}`, 'ok')
   }
 
   const handleGuardar = async () => {
-    const body = {
-      gestion: Number(form.gestion),
-      entidad: Number(form.entidad),
-      descEnt: form.descEnt.trim(),
-      siglaEnt: form.siglaEnt.trim()
-    }
+    if (form.nomestado.trim() === '') return setModalError('Ingrese el nombre del estado')
     try {
       if (modalMode === 'nuevo') {
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
-        })
-        if (!res.ok) throw new Error('Error al guardar')
+        await guardarEstado({ nomestado: form.nomestado.trim() })
       } else {
-        const res = await fetch(`${API_URL}/${selected.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
-        })
-        if (!res.ok) throw new Error('Error al actualizar')
+        await actualizarEstado(selected.codestado, { codestado: selected.codestado, nomestado: form.nomestado.trim() })
       }
       setShowModal(false)
       await cargarLista()
@@ -108,14 +96,13 @@ function Entidad() {
     }
   }
 
-  const filas = Math.max(entidades.length, 9)
-  const rows = Array.from({ length: filas }, (_, i) => entidades[i] || null)
+  const filas = Math.max(estados.length, 9)
+  const rows = Array.from({ length: filas }, (_, i) => estados[i] || null)
 
   return (
     <div className="vsiaf-root">
-      {/* Barra título Windows */}
       <div className="win-titlebar">
-        <span>&#9632; SISTEMA DE ACTIVOS FIJOS</span>
+        <span>&#9632; SISTEMA DE ACTIVOS FIJOS - ESTADO</span>
         <div className="win-controls">
           <button>&#8211;</button>
           <button>&#9633;</button>
@@ -123,7 +110,6 @@ function Entidad() {
         </div>
       </div>
 
-      {/* Header */}
       <header className="encabezado-marca">
         <div className="contenido-marca">
           <div className="bandera" />
@@ -131,18 +117,10 @@ function Entidad() {
             <h1 className="titulo-marca">V.S.I.A.F</h1>
             <p className="subtitulo-marca">Sistema de Activos Fijos</p>
           </div>
-          {/* aqui agregar logo grupal */}
-            <img
-               src="/src/assets/logo_grupo.jpeg"
-               alt="Logo 7 Bits Sin Éxito"
-               className="logo-grupo"
-            />
         </div>
       </header>
 
-      {/* Layout */}
       <div className="app-layout">
-        {/* Sidebar */}
         <nav className="sidebar">
           <h2 className="menu-title">MENU PRINCIPAL</h2>
           <ul className="menu-list">
@@ -154,43 +132,36 @@ function Entidad() {
           </ul>
         </nav>
 
-        {/* Contenido */}
         <main className="content-area">
           <div className="window-frame">
             <div className="window-titlebar">
-              <span>&#9632; Entidades</span>
+              <span>&#9632; Estados</span>
             </div>
-
             <div className="window-body">
-              <h2 className="section-title">GESTIÓN DE ENTIDADES</h2>
-
+              <h2 className="section-title">GESTIÓN DE ESTADOS</h2>
               <div className="panel">
                 <div className="table-wrapper">
                   <div className="table-scroll-area">
                     <table className="data-table">
                       <thead>
                         <tr>
-                          <th style={{ width: '14%' }}>GESTIÓN</th>
-                          <th style={{ width: '14%' }}>ENTIDAD</th>
-                          <th style={{ width: '54%' }}>DESCRIPCIÓN</th>
-                          <th style={{ width: '18%' }}>SIGLA</th>
+                          <th style={{ width: '30%' }}>Codestado</th>
+                          <th style={{ width: '70%' }}>Nomestado</th>
                         </tr>
                       </thead>
                       <tbody>
                         {loading ? (
-                          <tr><td colSpan="4" style={{ textAlign: 'center' }}>Cargando...</td></tr>
+                          <tr><td colSpan="2" style={{ textAlign: 'center' }}>Cargando...</td></tr>
                         ) : (
                           rows.map((e, i) => (
                             <tr
                               key={i}
-                              className={selected?.id === e?.id ? 'selected' : ''}
+                              className={selected?.codestado === e?.codestado ? 'selected' : ''}
                               onClick={() => e && setSelected(e)}
                               style={{ cursor: e ? 'pointer' : 'default' }}
                             >
-                              <td>{e?.gestion ?? ''}</td>
-                              <td>{e?.entidad ?? ''}</td>
-                              <td>{e?.descEnt ?? ''}</td>
-                              <td>{e?.siglaEnt ?? ''}</td>
+                              <td>{e?.codestado ?? ''}</td>
+                              <td>{e?.nomestado ?? ''}</td>
                             </tr>
                           ))
                         )}
@@ -209,7 +180,6 @@ function Entidad() {
                   <button className="hscroll-btn">&#9654;</button>
                 </div>
               </div>
-
               <nav className="button-bar">
                 <button className="btn" onClick={handleNuevo}>Nuevo</button>
                 <button className="btn" onClick={handleEditar}>Editar</button>
@@ -218,7 +188,6 @@ function Entidad() {
                 <button className="btn" onClick={() => window.location.href = '/'}>Salir</button>
               </nav>
             </div>
-
             <footer className={`status-bar ${status.tipo}`}>
               {status.tipo === 'loading' && <span className="spinner"></span>}
               {status.msg}
@@ -227,31 +196,24 @@ function Entidad() {
         </main>
       </div>
 
-      {/* Modal */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-window">
             <header className="modal-titlebar">
-              <span>{modalMode === 'nuevo' ? 'Nueva Entidad' : 'Editar Entidad'}</span>
+              <span>{modalMode === 'nuevo' ? 'Nuevo Estado' : 'Editar Estado'}</span>
               <button className="close-btn" onClick={() => setShowModal(false)}>✕</button>
             </header>
             <div className="modal-body">
               {modalError && <p className="modal-error">{modalError}</p>}
               <label className="modal-field">
-                <span>GESTIÓN</span>
-                <input type="number" value={form.gestion} disabled={modalMode === 'editar'} onChange={(e) => setForm({ ...form, gestion: e.target.value })} placeholder="Ej: 2024" />
-              </label>
-              <label className="modal-field">
-                <span>ENTIDAD</span>
-                <input type="number" value={form.entidad} disabled={modalMode === 'editar'} onChange={(e) => setForm({ ...form, entidad: e.target.value })} placeholder="Ej: 10" />
-              </label>
-              <label className="modal-field">
-                <span>DESCRIPCIÓN</span>
-                <input type="text" value={form.descEnt} onChange={(e) => setForm({ ...form, descEnt: e.target.value })} placeholder="Nombre de la entidad" />
-              </label>
-              <label className="modal-field">
-                <span>SIGLA</span>
-                <input type="text" value={form.siglaEnt} onChange={(e) => setForm({ ...form, siglaEnt: e.target.value })} placeholder="Ej: MIN-EDU" />
+                <span>NOMBRE DEL ESTADO</span>
+                <input
+                  type="text"
+                  value={form.nomestado}
+                  onChange={(e) => setForm({ ...form, nomestado: e.target.value })}
+                  placeholder="Ingrese nombre"
+                  autoFocus
+                />
               </label>
             </div>
             <footer className="modal-footer">
@@ -261,7 +223,26 @@ function Entidad() {
           </div>
         </div>
       )}
+
+      {showEliminar && (
+        <div className="modal-overlay">
+          <div className="modal-window">
+            <header className="modal-titlebar">
+              <span>Eliminar Estado</span>
+              <button className="close-btn" onClick={() => setShowEliminar(false)}>✕</button>
+            </header>
+            <div className="modal-body">
+              <p style={{ fontSize: '13px' }}>¿Eliminar el estado <b>{selected?.nomestado}</b>?</p>
+            </div>
+            <footer className="modal-footer">
+              <button className="btn" onClick={confirmarEliminar}>Sí, eliminar</button>
+              <button className="btn" onClick={() => setShowEliminar(false)}>Cancelar</button>
+            </footer>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
-export default Entidad
+
+export default Estado
