@@ -8,7 +8,7 @@ import UnidadAdmin from './pages/UnidadAdmin'
 function App() {
   return (
     <BrowserRouter>
-  
+
     <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/entidad" element={<Entidad />} />
