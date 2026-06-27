@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import './CtaPar.css'
 
 const API_BASE_URL = 'https://proyectosis414-g-7bitssinexito-rwry.onrender.com'
-const API_URL = `${API_BASE_URL}/cta-par`
+const API_URL = `${API_BASE_URL}/api/ctapar`
 
 const emptyForm = {
   codigo: '',
