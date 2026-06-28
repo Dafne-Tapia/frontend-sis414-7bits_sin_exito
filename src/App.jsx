@@ -20,7 +20,7 @@ function App() {
         <Route path="/baja" element={<Baja />} />
         <Route path="/estado" element={<Estado />} />
         <Route path="/obj-gasto" element={<ObjGasto />} />
-        <Route path="/mes" element={<Mes />} />          
+        <Route path="/mes" element={<Mes />} />
       </Routes>
     </BrowserRouter>
   )
