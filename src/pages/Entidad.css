@@ -185,7 +185,6 @@
   border-right: 1px solid #c0c0c0;
   padding: 3px 8px;
   height: 21px;
-
 }
 .data-table tbody tr:hover td { background: #cce4ff !important; cursor: pointer; }
 .data-table tbody tr.selected td { background: #0a246a !important; color: #fff !important; }
@@ -302,4 +301,17 @@
   height: 140px;
   object-fit: contain;
   border-radius: 50%;
+}
+
+.data-table tbody tr.selected td {
+  background: #c7ddf4 !important;
+  color: #000 !important;
+  font-weight: bold;
+  border-top: 1px solid #4f81bd;
+  border-bottom: 1px solid #4f81bd;
+}
+
+.data-table tbody tr.selected {
+  outline: 2px solid #2f66c9;
+  outline-offset: -2px;
 }
