@@ -16,6 +16,8 @@ function UnidadAdmin() {
   })
   const [mensaje, setMensaje] = useState('Listo.')
   const [cargando, setCargando] = useState(false)
+  const [busqueda, setBusqueda] = useState('')
+  const [guardando, setGuardando] = useState(false)
 
   useEffect(() => {
     cargarUnidades()
@@ -63,42 +65,47 @@ function UnidadAdmin() {
     setShowForm(true)
   }
 
-  const handleGuardar = async () => {
-    if (!form.entidad.trim() || !form.unidad.trim()) {
-      setMensaje('Complete al menos Entidad y Unidad antes de guardar.')
-      return
-    }
+ const handleGuardar = async () => {
+   if (!form.entidad.trim() || !form.unidad.trim()) {
+     setMensaje('Complete al menos Entidad y Unidad antes de guardar.')
+     return
+   }
 
-    try {
-      if (modo === 'nuevo') {
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(form)
-        })
-        if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
-        setMensaje('Unidad guardada correctamente.')
-      } else {
-        const res = await fetch(`${API_URL}/${selected.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(form)
-        })
-        if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
-        setMensaje('Unidad actualizada correctamente.')
-      }
+   if (guardando) return
 
-      setShowForm(false)
-      setSelected(null)
-      cargarUnidades()
-    } catch (error) {
-      setMensaje(`Error al guardar: ${error.message}`)
-    }
-  }
+   setGuardando(true)
+   try {
+     if (modo === 'nuevo') {
+       const res = await fetch(API_URL, {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(form)
+       })
+       if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
+       setMensaje('Unidad guardada correctamente.')
+     } else {
+       const res = await fetch(`${API_URL}/${selected.id}`, {
+         method: 'PUT',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(form)
+       })
+       if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
+       setMensaje('Unidad actualizada correctamente.')
+     }
+
+     setShowForm(false)
+     setSelected(null)
+     cargarUnidades()
+   } catch (error) {
+     setMensaje(`Error al guardar: ${error.message}`)
+   } finally {
+     setGuardando(false)
+   }
+ }
 
   const handleEliminar = async () => {
     if (!selected) {
@@ -138,8 +145,13 @@ function UnidadAdmin() {
     )
   }
 
-  const filas = Math.max(unidades.length, 8)
-  const rows = Array.from({ length: filas }, (_, index) => unidades[index] || null)
+ const unidadesFiltradas = unidades.filter((u) =>
+   u.entidad?.toLowerCase().includes(busqueda.toLowerCase()) ||
+   u.ciudad?.toLowerCase().includes(busqueda.toLowerCase())
+ )
+
+ const filas = Math.max(unidadesFiltradas.length, 8)
+ const rows = Array.from({ length: filas }, (_, index) => unidadesFiltradas[index] || null)
 
   return (
     <div className="unidad-root">
@@ -177,6 +189,14 @@ function UnidadAdmin() {
             <div className="panel-small-title">Unidad Administrativa</div>
             <div className="panel-title">ADMINISTRACION UNIDAD ADMINISTRATIVA</div>
             {cargando && <p className="unidad-mensaje">Cargando datos...</p>}
+
+            <input
+              type="text"
+              placeholder="Buscar por entidad o ciudad..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              className="unidad-buscador"
+            />
 
             <table className="unidad-table">
               <thead>
