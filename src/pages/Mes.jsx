@@ -179,16 +179,14 @@ function Mes() {
                   <table className="mes-table">
                     <thead>
                       <tr>
-                        <th style={{ width: '10%' }}>ID</th>
-                        <th style={{ width: '20%' }}>Número</th>
-                        <th style={{ width: '40%' }}>Nombre</th>
+                        <th style={{ width: '25%' }}>Número</th>
+                        <th style={{ width: '45%' }}>Nombre</th>
                         <th style={{ width: '30%' }}>Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
                       {rows.map((registro, i) => (
                         <tr key={i}>
-                          <td>{registro?.id ?? ''}</td>
                           <td>{registro?.mes ?? ''}</td>
                           <td>{registro?.nommes ?? ''}</td>
                           <td>
