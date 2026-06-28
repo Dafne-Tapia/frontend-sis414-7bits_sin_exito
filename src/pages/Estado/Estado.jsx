@@ -3,6 +3,7 @@ import { listarEstados, guardarEstado, actualizarEstado, eliminarEstado } from '
 import './estado.css'
 import { Link, useNavigate } from 'react-router-dom'
 import banderaBol from '../../assets/banderaBol.png';
+import logoGrupo from '../../assets/logo_grupo.jpeg'
 
 function Estado() {
   const navigate = useNavigate()
@@ -104,11 +105,6 @@ function Estado() {
     <div className="vsiaf-root">
       <div className="win-titlebar">
         <span>&#9632; SISTEMA DE ACTIVOS FIJOS - ESTADO</span>
-        <div className="win-controls">
-          <button>&#8211;</button>
-          <button>&#9633;</button>
-          <button className="cerrar">&#x2715;</button>
-        </div>
       </div>
 
       <header className="encabezado-marca">
@@ -123,6 +119,7 @@ function Estado() {
             <p className="subtitulo-marca">Sistema de Activos Fijos</p>
           </div>
         </div>
+        <img src={logoGrupo} alt="7 bit sin éxito" className="logo-grupo" />
       </header>
 
       <div className="app-layout">
@@ -173,16 +170,6 @@ function Estado() {
                       </tbody>
                     </table>
                   </div>
-                  <aside className="vscrollbar">
-                    <button className="vscroll-btn">&#9650;</button>
-                    <div className="vscroll-track"></div>
-                    <button className="vscroll-btn">&#9660;</button>
-                  </aside>
-                </div>
-                <div className="hscroll-bar">
-                  <button className="hscroll-btn">&#9664;</button>
-                  <div className="hscroll-track"></div>
-                  <button className="hscroll-btn">&#9654;</button>
                 </div>
               </div>
               <nav className="button-bar">
