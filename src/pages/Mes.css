@@ -34,32 +34,33 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 24px;
+  padding: 10px 24px;
   border-bottom: 2px solid #6b6b6b;
   flex-shrink: 0;
-  min-height: 52px;
+  min-height: 80px;
 }
 
 .mes-encabezado-texto {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  flex: 1;
 }
 
 .mes-encabezado-titulo {
   font-family: 'Fredoka One', 'Arial Rounded MT Bold', Arial, sans-serif;
-  font-size: 22px;
+  font-size: 48px;
   font-weight: 900;
-  letter-spacing: 3px;
+  letter-spacing: 6px;
   color: #fff;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.5), 0 0 20px rgba(100,160,255,0.3);
 }
 
 .mes-encabezado-subtitulo {
   font-family: 'Dancing Script', 'Brush Script MT', cursive;
-  font-size: 12px;
+  font-size: 18px;
   color: #c5daf5;
-  margin-top: 0px;
+  margin-top: 2px;
 }
 
 .mes-encabezado-acciones {
