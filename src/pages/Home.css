@@ -17,7 +17,9 @@
   font-family: Tahoma, Arial, sans-serif;
   background: #c0c0c0;
   color: #000;
+  width: 100vw;
   height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -56,7 +58,7 @@
 .win-controls .cerrar { color: #c00000; }
 
 .encabezado-marca {
-  height: 160px;
+  height: 120px;
   background: linear-gradient(135deg, var(--navy) 60%, var(--mid-blue) 90%, var(--blue) 100%);
   padding: 14px 20px 10px 20px;
   display: flex;
@@ -71,9 +73,9 @@
 }
 
 .bandera {
-  width: 220px;
-  height: 110px;
-  background-image: url('../assets/banderaBol.png');
+  width: 130px;
+  height: 80px;
+  background-image: url('/src/assets/banderaBol.png');
   background-size: cover;
   background-position: center;
   border: 2px solid rgba(255,255,255,0.2);
@@ -106,6 +108,7 @@
   display: flex;
   flex: 1;
   overflow: hidden;
+  height: calc(100vh - 30px - 120px);
 }
 
 .sidebar {
@@ -177,21 +180,23 @@
 
 .content-area {
   flex: 1;
-  background: #f0f0f0;
-  padding: 16px;
-  overflow-y: auto;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  height: 100%;
 }
 
 .hero-image {
   width: 100%;
-  height: 65vh;
-  border: 2px solid #808080;
+  height: 100%;
+  border: none;
   background-image: url('../assets/casa-de-la-moneda-1.jpg');
   background-size: cover;
-  background-position: center;
+  background-position: center top;
   position: relative;
-  margin-bottom: 14px;
-  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+
 }
 
 .hero-watermark {
@@ -204,6 +209,7 @@
   text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
 }
 .encabezado-marca {
+  height: 120px;
   position: relative;
   overflow: hidden;
  }
