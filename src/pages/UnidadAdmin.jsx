@@ -21,13 +21,15 @@ function UnidadAdmin() {
   }, [])
 
   const cargarUnidades = async () => {
+    setMensaje('Cargando...')
     try {
       const res = await fetch(API_URL)
+      if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
       const data = await res.json()
       setUnidades(data)
       setMensaje(`${data.length} registro(s) cargado(s).`)
     } catch (error) {
-      setMensaje('Error al cargar datos.')
+      setMensaje(`Error al cargar datos: ${error.message}`)
     }
   }
 
@@ -59,24 +61,31 @@ function UnidadAdmin() {
   }
 
   const handleGuardar = async () => {
+    if (!form.entidad.trim() || !form.unidad.trim()) {
+      setMensaje('Complete al menos Entidad y Unidad antes de guardar.')
+      return
+    }
+
     try {
       if (modo === 'nuevo') {
-        await fetch(API_URL, {
+        const res = await fetch(API_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(form)
         })
+        if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
         setMensaje('Unidad guardada correctamente.')
       } else {
-        await fetch(`${API_URL}/${selected.id}`, {
+        const res = await fetch(`${API_URL}/${selected.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(form)
         })
+        if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
         setMensaje('Unidad actualizada correctamente.')
       }
 
@@ -84,7 +93,7 @@ function UnidadAdmin() {
       setSelected(null)
       cargarUnidades()
     } catch (error) {
-      setMensaje('Error al guardar.')
+      setMensaje(`Error al guardar: ${error.message}`)
     }
   }
 
@@ -101,15 +110,17 @@ function UnidadAdmin() {
     }
 
     try {
-      await fetch(`${API_URL}/${selected.id}`, {
+      const res = await fetch(`${API_URL}/${selected.id}`, {
         method: 'DELETE'
       })
+
+      if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
 
       setMensaje('Unidad eliminada correctamente.')
       setSelected(null)
       cargarUnidades()
     } catch (error) {
-      setMensaje('Error al eliminar.')
+      setMensaje(`Error al eliminar: ${error.message}`)
     }
   }
 
