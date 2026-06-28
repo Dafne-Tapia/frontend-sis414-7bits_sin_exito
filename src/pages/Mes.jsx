@@ -117,6 +117,9 @@ function Mes() {
               </li>
             ))}
           </ul>
+          <div className="sidebar-volver">
+            <Link to="/" className="menu-btn">Volver al menú</Link>
+          </div>
         </nav>
 
         <main className="content-area">
