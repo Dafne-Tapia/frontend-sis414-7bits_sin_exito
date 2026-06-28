@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './Mes.css'
 
@@ -7,6 +7,7 @@ function Mes() {
   const [nuevoMes, setNuevoMes] = useState({ mes: '', nommes: '' })
   const [editandoId, setEditandoId] = useState(null)
   const [cargando, setCargando] = useState(true)
+  const navigate = useNavigate()
 
   const API_URL = 'https://proyectosis414-g-7bitssinexito-rwry.onrender.com/meses'
 
@@ -92,10 +93,17 @@ function Mes() {
   }
 
   return (
-    <div>
-      <header>
-        <Link to="/" className="mes-home">Volver al menú</Link>
-      </header>
+    <div className="mes-root">
+      <div className="mes-titlebar">
+        <span>■ SISTEMA DE ACTIVOS FIJOS - MES</span>
+      </div>
+
+      <div className="mes-encabezado">
+        <div className="mes-encabezado-texto">
+          <h1 className="mes-encabezado-titulo">V.S.I.A.F</h1>
+          <p className="mes-encabezado-subtitulo">Sistema de Activos Fijos</p>
+        </div>
+      </div>
 
       <div className="app-layout">
         <nav className="sidebar">
@@ -103,7 +111,9 @@ function Mes() {
           <ul className="menu-list">
             {menuItems.map((item) => (
               <li key={item.path}>
-                <a href={item.path} className="menu-btn">{item.label}</a>
+                <button className="menu-btn" onClick={() => navigate(item.path)}>
+                  {item.label}
+                </button>
               </li>
             ))}
           </ul>
