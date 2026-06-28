@@ -185,8 +185,6 @@
   border-right: 1px solid #c0c0c0;
   padding: 3px 8px;
   height: 21px;
-  background: #ffffff !important;
-  color: #000000 !important;
 }
 .data-table tbody tr:hover td { background: #cce4ff !important; cursor: pointer; }
 .data-table tbody tr.selected td { background: #0a246a !important; color: #fff !important; }
