@@ -1,10 +1,9 @@
 .unidad-root {
-  width: 1180px;
+  width: 100%;
   min-height: 100vh;
-  margin: 0 auto;
+  margin: 0;
   background: #f4f4f4;
   font-family: Arial, sans-serif;
-  border: 1px solid #999;
   box-sizing: border-box;
 }
 
@@ -25,6 +24,7 @@
   gap: 55px;
   padding: 0 55px;
   color: white;
+  position: relative;
 }
 
 .unidad-bandera {
@@ -33,17 +33,17 @@
   border-radius: 6px;
   border: 2px solid rgba(255,255,255,0.4);
   box-shadow: 0 5px 14px rgba(0,0,0,0.4);
-  background: linear-gradient(
-    #e5252a 0 33%,
-    #f7df22 33% 66%,
-    #14853b 66%
-  );
+  background-image: url('/frontend-sis414-7bits_sin_exito/assets/banderaBol.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.unidad-header div:last-child {
+.unidad-header-texto {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1;
 }
 
 .unidad-header h1 {
@@ -61,9 +61,20 @@
   color: #e6f3ff;
 }
 
+.unidad-logo {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 50%;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 .unidad-layout {
   display: flex;
-  min-height: 650px;
+  min-height: calc(100vh - 230px);
 }
 
 .unidad-menu {
@@ -121,9 +132,7 @@
   margin-bottom: 15px;
 }
 
-.unidad-info p {
-  margin: 7px 0;
-}
+.unidad-info p { margin: 7px 0; }
 
 .unidad-panel {
   background: white;
@@ -173,15 +182,8 @@
   box-sizing: border-box;
 }
 
-.unidad-table tr:hover td {
-  background: #e8f2ff;
-  cursor: pointer;
-}
-
-.fila-seleccionada td {
-  background: #0a246a !important;
-  color: white !important;
-}
+.unidad-table tr:hover td { background: #e8f2ff; cursor: pointer; }
+.fila-seleccionada td { background: #0a246a !important; color: white !important; }
 
 .unidad-buttons {
   width: 88%;
@@ -207,9 +209,7 @@
   box-sizing: border-box;
 }
 
-.unidad-buttons button:hover {
-  filter: brightness(1.15);
-}
+.unidad-buttons button:hover { filter: brightness(1.15); }
 
 .unidad-mensaje {
   text-align: center;
@@ -276,5 +276,4 @@
   border: 2px solid #ccc;
   font-weight: bold;
   cursor: pointer;
-  box-sizing: border-box;
 }
