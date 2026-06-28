@@ -15,6 +15,7 @@ function UnidadAdmin() {
     ciudad: ''
   })
   const [mensaje, setMensaje] = useState('Listo.')
+  const [cargando, setCargando] = useState(false)
 
   useEffect(() => {
     cargarUnidades()
