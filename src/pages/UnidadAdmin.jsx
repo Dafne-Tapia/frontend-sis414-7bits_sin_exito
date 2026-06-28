@@ -17,6 +17,7 @@ function UnidadAdmin() {
   const [mensaje, setMensaje] = useState('Listo.')
   const [cargando, setCargando] = useState(false)
   const [busqueda, setBusqueda] = useState('')
+  const [guardando, setGuardando] = useState(false)
 
   useEffect(() => {
     cargarUnidades()
