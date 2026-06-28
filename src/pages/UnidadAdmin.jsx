@@ -65,42 +65,47 @@ function UnidadAdmin() {
     setShowForm(true)
   }
 
-  const handleGuardar = async () => {
-    if (!form.entidad.trim() || !form.unidad.trim()) {
-      setMensaje('Complete al menos Entidad y Unidad antes de guardar.')
-      return
-    }
+ const handleGuardar = async () => {
+   if (!form.entidad.trim() || !form.unidad.trim()) {
+     setMensaje('Complete al menos Entidad y Unidad antes de guardar.')
+     return
+   }
 
-    try {
-      if (modo === 'nuevo') {
-        const res = await fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(form)
-        })
-        if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
-        setMensaje('Unidad guardada correctamente.')
-      } else {
-        const res = await fetch(`${API_URL}/${selected.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(form)
-        })
-        if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
-        setMensaje('Unidad actualizada correctamente.')
-      }
+   if (guardando) return
 
-      setShowForm(false)
-      setSelected(null)
-      cargarUnidades()
-    } catch (error) {
-      setMensaje(`Error al guardar: ${error.message}`)
-    }
-  }
+   setGuardando(true)
+   try {
+     if (modo === 'nuevo') {
+       const res = await fetch(API_URL, {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(form)
+       })
+       if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
+       setMensaje('Unidad guardada correctamente.')
+     } else {
+       const res = await fetch(`${API_URL}/${selected.id}`, {
+         method: 'PUT',
+         headers: {
+           'Content-Type': 'application/json'
+         },
+         body: JSON.stringify(form)
+       })
+       if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
+       setMensaje('Unidad actualizada correctamente.')
+     }
+
+     setShowForm(false)
+     setSelected(null)
+     cargarUnidades()
+   } catch (error) {
+     setMensaje(`Error al guardar: ${error.message}`)
+   } finally {
+     setGuardando(false)
+   }
+ }
 
   const handleEliminar = async () => {
     if (!selected) {
