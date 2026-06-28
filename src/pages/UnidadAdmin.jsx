@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './UnidadAdmin.css'
 import logoGrupo from '../assets/logo_grupo.jpeg'
 
@@ -9,186 +9,224 @@ function UnidadAdmin() {
   const navigate = useNavigate()
   const [unidades, setUnidades] = useState([])
   const [selected, setSelected] = useState(null)
-  const [showForm, setShowForm] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [modo, setModo] = useState('nuevo')
-  const [form, setForm] = useState({
-    entidad: '',
-    unidad: '',
-    descripcion: '',
-    ciudad: ''
-  })
-  const [mensaje, setMensaje] = useState('Listo.')
+  const [form, setForm] = useState({ entidad: '', unidad: '', descripcion: '', ciudad: '' })
+  const [status, setStatus] = useState({ msg: 'Listo.', tipo: '' })
+  const [modalError, setModalError] = useState('')
+
+  const menuItems = [
+    { label: 'Entidad', path: '/entidad' },
+    { label: 'Objeto de Gasto', path: '/obj-gasto' },
+    { label: 'Unidad Administrativa', path: '/unidad-administrativa' },
+    { label: 'Mes', path: '/mes' },
+    { label: 'Estado', path: '/estado' },
+    { label: 'Baja', path: '/baja' },
+    { label: 'Cta Par', path: '/cta-par' },
+  ]
 
   useEffect(() => { cargarUnidades() }, [])
 
+  const setStatusMsg = (msg, tipo = '') => setStatus({ msg, tipo })
+
   const cargarUnidades = async () => {
+    setStatusMsg('Cargando...', 'loading')
     try {
       const res = await fetch(API_URL)
+      if (!res.ok) throw new Error(`Error: ${res.status}`)
       const data = await res.json()
       setUnidades(data)
-      setMensaje(`${data.length} registro(s) cargado(s).`)
-    } catch (error) {
-      setMensaje('Error al cargar datos.')
+      setStatusMsg(`${data.length} registro(s) cargado(s).`, 'ok')
+    } catch (e) {
+      setUnidades([])
+      setStatusMsg(`Error al cargar: ${e.message}`, 'error')
     }
   }
 
   const handleNuevo = () => {
-    setModo('nuevo')
     setForm({ entidad: '', unidad: '', descripcion: '', ciudad: '' })
-    setShowForm(true)
+    setModo('nuevo')
+    setModalError('')
+    setShowModal(true)
   }
 
   const handleEditar = () => {
-    if (!selected) { setMensaje('Seleccione una fila para editar.'); return }
+    if (!selected) return setStatusMsg('Seleccione una fila para editar.', 'error')
+    setForm({ entidad: selected.entidad, unidad: selected.unidad, descripcion: selected.descripcion, ciudad: selected.ciudad })
     setModo('editar')
-    setForm({
-      entidad: selected.entidad,
-      unidad: selected.unidad,
-      descripcion: selected.descripcion,
-      ciudad: selected.ciudad
-    })
-    setShowForm(true)
+    setModalError('')
+    setShowModal(true)
+  }
+
+  const handleEliminar = async () => {
+    if (!selected) return setStatusMsg('Seleccione una fila para eliminar.', 'error')
+    if (!confirm(`¿Eliminar la unidad ${selected.unidad}?`)) return
+    try {
+      const res = await fetch(`${API_URL}/${selected.id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error('Error al eliminar')
+      await cargarUnidades()
+      setStatusMsg('Unidad eliminada correctamente.', 'ok')
+    } catch (e) {
+      setStatusMsg(`Error al eliminar: ${e.message}`, 'error')
+    }
+  }
+
+  const handleSeleccionar = () => {
+    if (!selected) return setStatusMsg('Seleccione una fila primero.', 'error')
+    setStatusMsg(`Seleccionado: ${selected.entidad} - ${selected.unidad} - ${selected.ciudad}`, 'ok')
   }
 
   const handleGuardar = async () => {
     try {
       if (modo === 'nuevo') {
-        await fetch(API_URL, {
+        const res = await fetch(API_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(form)
         })
-        setMensaje('Unidad guardada correctamente.')
+        if (!res.ok) throw new Error('Error al guardar')
       } else {
-        await fetch(`${API_URL}/${selected.id}`, {
+        const res = await fetch(`${API_URL}/${selected.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(form)
         })
-        setMensaje('Unidad actualizada correctamente.')
+        if (!res.ok) throw new Error('Error al actualizar')
       }
-      setShowForm(false)
-      setSelected(null)
-      cargarUnidades()
-    } catch (error) {
-      setMensaje('Error al guardar.')
+      setShowModal(false)
+      await cargarUnidades()
+      setStatusMsg('Operacion realizada correctamente.', 'ok')
+    } catch (e) {
+      setModalError(e.message)
     }
   }
 
-  const handleEliminar = async () => {
-    if (!selected) { setMensaje('Seleccione una fila para eliminar.'); return }
-    if (!confirm(`¿Eliminar la unidad ${selected.unidad}?`)) return
-    try {
-      await fetch(`${API_URL}/${selected.id}`, { method: 'DELETE' })
-      setMensaje('Unidad eliminada correctamente.')
-      setSelected(null)
-      cargarUnidades()
-    } catch (error) {
-      setMensaje('Error al eliminar.')
-    }
-  }
-
-  const handleSeleccionar = () => {
-    if (!selected) { setMensaje('Seleccione una fila primero.'); return }
-    setMensaje(`Seleccionado: ${selected.entidad} - ${selected.unidad} - ${selected.ciudad}`)
-  }
-
-  const filas = Math.max(unidades.length, 8)
-  const rows = Array.from({ length: filas }, (_, index) => unidades[index] || null)
+  const filas = Math.max(unidades.length, 9)
+  const rows = Array.from({ length: filas }, (_, i) => unidades[i] || null)
 
   return (
-    <div className="unidad-root">
-      <div className="unidad-titlebar">SISTEMA DE ACTIVOS FIJOS</div>
+    <div className="vsiaf-root">
+      <div className="win-titlebar">
+        <span>&#9632; SISTEMA DE ACTIVOS FIJOS - UNIDAD ADMINISTRATIVA</span>
+      </div>
 
-      <header className="unidad-header">
-        <div className="unidad-bandera"></div>
-        <div className="unidad-header-texto">
-          <h1>V.S.I.A.F</h1>
-          <p>Sistema de Activos Fijos</p>
+      <header className="encabezado-marca">
+        <div className="contenido-marca">
+          <div className="bandera" />
+          <div className="texto-marca">
+            <h1 className="titulo-marca">V.S.I.A.F</h1>
+            <p className="subtitulo-marca">Sistema de Activos Fijos</p>
+          </div>
+          <img src={logoGrupo} alt="Logo 7 Bits Sin Exito" className="logo-grupo" />
         </div>
-        <img
-          src={logoGrupo}
-          alt="Logo 7 Bits Sin Exito"
-          className="unidad-logo"
-        />
       </header>
 
-      <div className="unidad-layout">
-        <aside className="unidad-menu">
-          <h2>MENU PRINCIPAL</h2>
-          <button onClick={() => navigate('/entidad')}>Entidad</button>
-          <button onClick={() => navigate('/obj-gasto')}>Objeto de Gasto</button>
-          <button className="activo" onClick={() => navigate('/unidad-administrativa')}>Unidad Administrativa</button>
-          <button onClick={() => navigate('/mes')}>Mes</button>
-          <button onClick={() => navigate('/estado')}>Estado</button>
-          <button onClick={() => navigate('/baja')}>Baja</button>
-          <button onClick={() => navigate('/cta-par')}>Cta Par</button>
-        </aside>
+      <div className="app-layout">
+        <nav className="sidebar">
+          <h2 className="menu-title">MENU PRINCIPAL</h2>
+          <ul className="menu-list">
+            {menuItems.map((item) => (
+              <li key={item.path}>
+                <Link to={item.path} className="menu-btn">{item.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-        <main className="unidad-content">
-          <div className="unidad-info">
-            <p><b>ENTIDAD:</b> 0025 Ministerio de la Presidencia</p>
-            <p><b>UNIDAD:</b> 0</p>
-          </div>
-
-          <section className="unidad-panel">
-            <div className="panel-small-title">Unidad Administrativa</div>
-            <div className="panel-title">ADMINISTRACION UNIDAD ADMINISTRATIVA</div>
-
-            <table className="unidad-table">
-              <thead>
-                <tr>
-                  <th>ENTIDAD</th>
-                  <th>UNIDAD</th>
-                  <th>DESCRIPCION</th>
-                  <th>CIUDAD</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((item, index) => (
-                  <tr
-                    key={index}
-                    className={selected?.id === item?.id ? 'fila-seleccionada' : ''}
-                    onClick={() => item && setSelected(item)}
-                  >
-                    <td>{item?.entidad || ''}</td>
-                    <td>{item?.unidad || ''}</td>
-                    <td>{item?.descripcion || ''}</td>
-                    <td>{item?.ciudad || ''}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <div className="unidad-buttons">
-              <button onClick={handleNuevo}>Nuevo</button>
-              <button onClick={handleEditar}>Editar</button>
-              <button onClick={handleEliminar}>Eliminar</button>
-              <button onClick={handleSeleccionar}>Seleccionar</button>
-              <button onClick={() => navigate('/')}>Salir</button>
+        <main className="content-area">
+          <div className="window-frame">
+            <div className="window-titlebar">
+              <span>&#9632; Unidad Administrativa</span>
             </div>
+            <div className="window-body">
+              <h2 className="section-title">ADMINISTRACION UNIDAD ADMINISTRATIVA</h2>
+              <div className="panel">
+                <div className="table-wrapper">
+                  <div className="table-scroll-area">
+                    <table className="data-table">
+                      <thead>
+                        <tr>
+                          <th>ENTIDAD</th>
+                          <th>UNIDAD</th>
+                          <th>DESCRIPCION</th>
+                          <th>CIUDAD</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {rows.map((e, i) => (
+                          <tr
+                            key={i}
+                            className={selected?.id === e?.id ? 'selected' : ''}
+                            onClick={() => e && setSelected(e)}
+                            style={{ cursor: e ? 'pointer' : 'default' }}
+                          >
+                            <td>{e?.entidad ?? ''}</td>
+                            <td>{e?.unidad ?? ''}</td>
+                            <td>{e?.descripcion ?? ''}</td>
+                            <td>{e?.ciudad ?? ''}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <aside className="vscrollbar">
+                    <button className="vscroll-btn">&#9650;</button>
+                    <div className="vscroll-track"></div>
+                    <button className="vscroll-btn">&#9660;</button>
+                  </aside>
+                </div>
+                <div className="hscroll-bar">
+                  <button className="hscroll-btn">&#9664;</button>
+                  <div className="hscroll-track"></div>
+                  <button className="hscroll-btn">&#9654;</button>
+                </div>
+              </div>
 
-            <p className="unidad-mensaje">{mensaje}</p>
-          </section>
+              <nav className="button-bar">
+                <button className="btn" onClick={handleNuevo}>Nuevo</button>
+                <button className="btn" onClick={handleEditar}>Editar</button>
+                <button className="btn" onClick={handleEliminar}>Eliminar</button>
+                <button className="btn" onClick={handleSeleccionar}>Seleccionar</button>
+                <button className="btn" onClick={() => navigate('/')}>Salir</button>
+              </nav>
+            </div>
+            <footer className={`status-bar ${status.tipo}`}>
+              {status.msg}
+            </footer>
+          </div>
         </main>
       </div>
 
-      {showForm && (
-        <div className="unidad-modal">
-          <div className="unidad-modal-content">
-            <h2>{modo === 'nuevo' ? 'Nueva Unidad Administrativa' : 'Editar Unidad Administrativa'}</h2>
-            <label>Entidad</label>
-            <input type="text" value={form.entidad} onChange={(e) => setForm({ ...form, entidad: e.target.value })} />
-            <label>Unidad</label>
-            <input type="text" value={form.unidad} onChange={(e) => setForm({ ...form, unidad: e.target.value })} />
-            <label>Descripcion</label>
-            <input type="text" value={form.descripcion} onChange={(e) => setForm({ ...form, descripcion: e.target.value })} />
-            <label>Ciudad</label>
-            <input type="text" value={form.ciudad} onChange={(e) => setForm({ ...form, ciudad: e.target.value })} />
-            <div className="modal-buttons">
-              <button onClick={handleGuardar}>Guardar</button>
-              <button onClick={() => setShowForm(false)}>Cancelar</button>
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-window">
+            <header className="modal-titlebar">
+              <span>{modo === 'nuevo' ? 'Nueva Unidad' : 'Editar Unidad'}</span>
+              <button onClick={() => setShowModal(false)}>✕</button>
+            </header>
+            <div className="modal-body">
+              {modalError && <p className="modal-error">{modalError}</p>}
+              <label className="modal-field">
+                <span>ENTIDAD</span>
+                <input type="text" value={form.entidad} onChange={(e) => setForm({ ...form, entidad: e.target.value })} />
+              </label>
+              <label className="modal-field">
+                <span>UNIDAD</span>
+                <input type="text" value={form.unidad} onChange={(e) => setForm({ ...form, unidad: e.target.value })} />
+              </label>
+              <label className="modal-field">
+                <span>DESCRIPCION</span>
+                <input type="text" value={form.descripcion} onChange={(e) => setForm({ ...form, descripcion: e.target.value })} />
+              </label>
+              <label className="modal-field">
+                <span>CIUDAD</span>
+                <input type="text" value={form.ciudad} onChange={(e) => setForm({ ...form, ciudad: e.target.value })} />
+              </label>
             </div>
+            <footer className="modal-footer">
+              <button className="btn" onClick={handleGuardar}>Aceptar</button>
+              <button className="btn" onClick={() => setShowModal(false)}>Cancelar</button>
+            </footer>
           </div>
         </div>
       )}

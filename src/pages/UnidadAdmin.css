@@ -33,18 +33,6 @@
   flex-shrink: 0;
 }
 
-.win-controls { display: flex; gap: 2px; }
-.win-controls button {
-  width: 22px; height: 20px;
-  border: 1px solid #000;
-  background: #d4d0c8;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 12px;
-}
-.win-controls button:hover { background: #e8e8e8; }
-.win-controls .cerrar { color: #c00000; }
-
 .encabezado-marca {
   height: 160px;
   background: linear-gradient(135deg, var(--navy) 60%, var(--mid-blue) 90%, var(--blue) 100%);
@@ -52,14 +40,17 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .contenido-marca { display: flex; align-items: center; gap: 14px; }
 
 .bandera {
   width: 220px; height: 110px;
-  background-image: url('../../assets/banderaBol.png');
-  background-size: cover;
+  background-image: url('/frontend-sis414-7bits_sin_exito/assets/banderaBol.png');
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
   border: 2px solid rgba(255,255,255,0.2);
   flex-shrink: 0;
@@ -81,6 +72,17 @@
   color: #c5daf5;
   margin-left: 40px;
   margin-top: 4px;
+}
+
+.logo-grupo {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
 .app-layout { display: flex; flex: 1; overflow: hidden; }
@@ -124,7 +126,9 @@
   border-right: 2px solid #7f7f7f;
   border-bottom: 2px solid #7f7f7f;
   cursor: pointer;
+  border-radius: 0;
 }
+
 .menu-btn:hover {
   background: linear-gradient(to bottom, #f7fbff 0%, #e8f0f8 45%, #cddceb 55%, #e6eef7 100%);
 }
@@ -132,8 +136,7 @@
 .content-area { flex: 1; background: #f0f0f0; padding: 16px; overflow-y: auto; }
 
 .window-frame {
-  max-width: 780px;
-  margin: 0 auto;
+  width: 100%;
   border: 2px solid;
   border-color: #fff #808080 #808080 #fff;
   box-shadow: 2px 2px 8px rgba(0,0,0,.4);
@@ -185,7 +188,6 @@
   border-right: 1px solid #c0c0c0;
   padding: 3px 8px;
   height: 21px;
-
 }
 .data-table tbody tr:hover td { background: #cce4ff !important; cursor: pointer; }
 .data-table tbody tr.selected td { background: #0a246a !important; color: #fff !important; }
@@ -221,10 +223,6 @@
   box-shadow: 1px 1px 3px rgba(0,0,0,.3);
 }
 .btn:hover { filter: brightness(1.12); }
-.btn:active {
-  background: linear-gradient(to bottom, #163d8a, #1e50a8 50%, #3a6bc4);
-  border-color: #0d2860 #7aa4e8 #7aa4e8 #0d2860;
-}
 
 .status-bar {
   font-size: 11px; padding: 3px 8px; background: #d4d0c8;
@@ -233,14 +231,6 @@
 }
 .status-bar.ok { color: #006400; }
 .status-bar.error { color: #990000; }
-.status-bar.loading { color: #00008b; }
-
-.spinner {
-  display: inline-block; width: 10px; height: 10px;
-  border: 2px solid #1e50a8; border-top-color: transparent;
-  border-radius: 50%; animation: spin .6s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
 
 .modal-overlay {
   position: fixed; inset: 0;
@@ -263,43 +253,19 @@
   padding: 4px 8px; display: flex; justify-content: space-between; align-items: center;
 }
 
-.close-btn {
-  background: linear-gradient(to bottom, #e8e8e8, #c0c0c0); color: #000;
-  border-top: 1px solid #fff; border-left: 1px solid #fff;
-  border-right: 1px solid #808080; border-bottom: 1px solid #808080;
-  width: 16px; height: 14px; font-size: 10px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-}
-
 .modal-body { padding: 14px 16px; }
 .modal-field { display: flex; flex-direction: column; gap: 3px; margin-bottom: 10px; }
 .modal-field span { font-size: 11px; font-weight: bold; color: #000080; }
 .modal-field input {
   width: 100%; padding: 3px 5px; font-size: 12px;
-  background: #fff;
-  color: #000;
+  background: #fff; color: #000;
   border-top: 2px solid #808080; border-left: 2px solid #808080;
   border-right: 2px solid #fff; border-bottom: 2px solid #fff;
 }
-.modal-field input:disabled { background: #d4d0c8; color: #555; }
 
 .modal-footer { display: flex; justify-content: center; gap: 8px; padding: 0 16px 14px; }
 
 .modal-error {
   font-size: 11px; color: #990000; background: #ffe0e0;
   border: 1px solid #cc0000; padding: 3px 6px; margin-bottom: 8px;
-}
-.encabezado-marca {
-  position: relative;
-  overflow: hidden;
- }
-.logo-grupo {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 140px;
-  height: 140px;
-  object-fit: contain;
-  border-radius: 50%;
 }
