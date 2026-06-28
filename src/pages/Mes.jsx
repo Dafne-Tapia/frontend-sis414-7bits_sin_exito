@@ -8,7 +8,7 @@ function Mes() {
   const [editandoId, setEditandoId] = useState(null)
   const [cargando, setCargando] = useState(true)
 
-  const API_URL = 'https://proyectosis414-g-7bitssinexito-ewht.onrender.com/meses'
+  const API_URL = 'https://proyectosis414-g-7bitssinexito-rwry.onrender.com/meses'
 
   useEffect(() => {
     fetch(API_URL)

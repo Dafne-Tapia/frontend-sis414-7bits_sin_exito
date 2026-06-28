@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import './UnidadAdmin.css'
 import logoGrupo from '../assets/logo_grupo.jpeg'
 
-const API_URL = 'https://proyectosis414-g-7bitssinexito-2.onrender.com/unidadadmin'
+const API_URL = 'https://proyectosis414-g-7bitssinexito-rwry.onrender.com'
 
 function UnidadAdmin() {
   const navigate = useNavigate()

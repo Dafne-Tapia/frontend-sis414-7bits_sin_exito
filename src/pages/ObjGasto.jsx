@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import './ObjGasto.css'
 import logoGrupo from '../assets/logo_grupo.jpeg'
 
-const API_URL = 'https://proyectosis414-g-7bitssinexito-z8cq.onrender.com'
+const API_URL = 'https://proyectosis414-g-7bitssinexito-rwry.onrender.com'
 
 function ObjGasto() {
   const navigate = useNavigate()
