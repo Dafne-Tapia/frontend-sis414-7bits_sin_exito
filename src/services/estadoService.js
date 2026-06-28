@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://estado-q8dw.onrender.com/api/estado';
+const API_URL = 'https://proyectosis414-g-7bitssinexito-rwry.onrender.com/estado';
 
 export const listarEstados = async () => {
   const res = await axios.get(API_URL);

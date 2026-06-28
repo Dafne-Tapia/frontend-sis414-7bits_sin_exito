@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Baja.css";
 
-const API_URL = "https://proyectosis414-g-7bitssinexito-rh8p.onrender.com/bajas";
+const API_URL = "https://proyectosis414-g-7bitssinexito-rwry.onrender.com/bajas";
 
 function Baja() {
     const [bajas, setBajas] = useState([]);
