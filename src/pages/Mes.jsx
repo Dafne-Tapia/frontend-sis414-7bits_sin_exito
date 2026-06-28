@@ -10,7 +10,6 @@ function Mes() {
 
   const API_URL = 'https://proyectosis414-g-7bitssinexito-ewht.onrender.com/meses'
 
-  // ===== MENÚ COMPLETO (IGUAL QUE ENTIDAD) =====
   const menuItems = [
     { label: 'Entidad', path: '/entidad' },
     { label: 'Objeto de Gasto', path: '/obj-gasto' },
@@ -20,7 +19,6 @@ function Mes() {
     { label: 'Baja', path: '/baja' },
     { label: 'Cta Par', path: '/cta-par' },
   ]
-  // ===== FIN MENÚ =====
 
   useEffect(() => {
     fetch(API_URL)
@@ -49,40 +47,69 @@ function Mes() {
     }
 
     if (!nuevoMes.nommes.trim()) {
-      alert('Debes escribir un nombre de mes')
+      alert('Debe escribir el nombre de un mes')
       return
     }
 
-    const nuevoRegistro = {
-      mes: numero,
-      nommes: nuevoMes.nommes.trim()
-    }
+    if (editandoId !== null) {
 
-    fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(nuevoRegistro)
-    })
-    .then(response => response.json())
-    .then(data => {
-      setRegistros([...registros, data])
-      setNuevoMes({ mes: '', nommes: '' })
-    })
-    .catch(error => {
-      alert('Error al guardar en la base de datos')
-    })
+      fetch(`${API_URL}/${editandoId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          mes: numero,
+          nommes: nuevoMes.nommes.trim()
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        const actualizados = registros.map(item => 
+          item.id === editandoId ? data : item
+        )
+        setRegistros(actualizados)
+        setNuevoMes({ mes: '', nommes: '' })
+        setEditandoId(null)
+        alert('Mes actualizado correctamente')
+      })
+      .catch(error => {
+        alert('Error al actualizar el mes')
+      })
+    } else {
+      const nuevoRegistro = {
+        mes: numero,
+        nommes: nuevoMes.nommes.trim()
+      }
+
+      fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevoRegistro)
+      })
+      .then(response => response.json())
+      .then(data => {
+        setRegistros([...registros, data])
+        setNuevoMes({ mes: '', nommes: '' })
+        alert('Mes guardado correctamente')
+      })
+      .catch(error => {
+        alert('Error al guardar el mes')
+      })
+    }
   }
 
   const handleDelete = (id) => {
-    if (confirm('¿Seguro que quieres eliminar este mes?')) {
+    if (confirm('¿Seguro que desea eliminar este mes?')) {
       fetch(`${API_URL}/${id}`, {
         method: 'DELETE'
       })
       .then(() => {
         const filtrados = registros.filter(item => item.id !== id)
         setRegistros(filtrados)
+        alert('Mes eliminado correctamente')
       })
       .catch(error => {
         alert('Error al eliminar')
@@ -123,7 +150,6 @@ function Mes() {
         <Link to="/" className="mes-home">Volver al menú</Link>
       </header>
 
-      {/* ===== LAYOUT CON SIDEBAR (EXACTAMENTE IGUAL QUE ENTIDAD) ===== */}
       <div className="app-layout">
         <nav className="sidebar">
           <h2 className="menu-title">MENU PRINCIPAL</h2>
@@ -214,7 +240,6 @@ function Mes() {
           </div>
         </main>
       </div>
-      {/* ===== FIN LAYOUT ===== */}
     </div>
   )
 }
