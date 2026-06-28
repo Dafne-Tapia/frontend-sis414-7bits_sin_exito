@@ -58,7 +58,7 @@
 
 .bandera {
   width: 220px; height: 110px;
-  background-image: url('../assets/banderaBol.png');
+  background-image: url('../../assets/banderaBol.png');
   background-size: cover;
   background-position: center;
   border: 2px solid rgba(255,255,255,0.2);
@@ -145,7 +145,6 @@
   font-size: 11px;
   font-weight: bold;
   padding: 3px 8px;
-  text-align: left;
 }
 
 .window-body { background: #d4d0c8; padding: 12px; }
@@ -186,21 +185,10 @@
   border-right: 1px solid #c0c0c0;
   padding: 3px 8px;
   height: 21px;
-  background: #ffffff !important;
-  color: #000000 !important;
-}
 
-.data-table tbody tr:hover td {
-  background: #cce4ff !important;
-  cursor: pointer;
 }
-
-.data-table tbody tr.selected td {
-  background: #0a246a !important;
-  color: #fff !important;
-}
-.data-table tbody tr:hover td { background: #cce4ff; cursor: pointer; }
-.data-table tbody tr.selected td { background: #0a246a; color: #fff; }
+.data-table tbody tr:hover td { background: #cce4ff !important; cursor: pointer; }
+.data-table tbody tr.selected td { background: #0a246a !important; color: #fff !important; }
 
 .vscrollbar {
   width: 17px; display: flex; flex-direction: column;
@@ -289,6 +277,7 @@
 .modal-field input {
   width: 100%; padding: 3px 5px; font-size: 12px;
   background: #fff;
+  color: #000;
   border-top: 2px solid #808080; border-left: 2px solid #808080;
   border-right: 2px solid #fff; border-bottom: 2px solid #fff;
 }
