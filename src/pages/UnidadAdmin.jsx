@@ -176,6 +176,7 @@ function UnidadAdmin() {
           <section className="unidad-panel">
             <div className="panel-small-title">Unidad Administrativa</div>
             <div className="panel-title">ADMINISTRACION UNIDAD ADMINISTRATIVA</div>
+            {cargando && <p className="unidad-mensaje">Cargando datos...</p>}
 
             <table className="unidad-table">
               <thead>
