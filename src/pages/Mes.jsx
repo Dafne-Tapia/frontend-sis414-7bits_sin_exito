@@ -1,6 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './Mes.css'
+import bandera from '../assets/bandera.png'
+import logoGrupo from '../assets/logo_grupo.jpeg'
+
 
 // Fuentes igual a la imagen original
 const fontLink = document.createElement('link')
@@ -113,8 +116,8 @@ function Mes() {
         <span>■ SISTEMA DE ACTIVOS FIJOS - MES</span>
       </div>
 
-      {/* Encabezado igual a ObjGasto con V.S.I.A.F y botón Volver arriba */}
       <header className="mes-encabezado">
+        <div className="bandera" />
         <div className="mes-encabezado-texto">
           <h1 className="mes-encabezado-titulo">V.S.I.A.F</h1>
           <p className="mes-encabezado-subtitulo">Sistema de Activos Fijos</p>
@@ -122,6 +125,7 @@ function Mes() {
         <div className="mes-encabezado-acciones">
           <Link to="/" className="mes-encabezado-btn">Volver al menú</Link>
         </div>
+        <img src={logoGrupo} alt="Logo 7 Bits Sin Exito" className="logo-grupo"
       </header>
 
       <div className="app-layout">

@@ -393,3 +393,21 @@
     grid-template-columns: 1fr;
   }
 }
+.logo-grupo {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+.bandera {
+  width: 220px; height: 110px;
+  background-image: url('../../assets/banderaBol.png');
+  background-size: cover;
+  background-position: center;
+  border: 2px solid rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
