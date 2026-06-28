@@ -15,23 +15,26 @@ function UnidadAdmin() {
     ciudad: ''
   })
   const [mensaje, setMensaje] = useState('Listo.')
+  const [cargando, setCargando] = useState(false)
 
   useEffect(() => {
     cargarUnidades()
   }, [])
 
-  const cargarUnidades = async () => {
-    setMensaje('Cargando...')
-    try {
-      const res = await fetch(API_URL)
-      if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
-      const data = await res.json()
-      setUnidades(data)
-      setMensaje(`${data.length} registro(s) cargado(s).`)
-    } catch (error) {
-      setMensaje(`Error al cargar datos: ${error.message}`)
-    }
-  }
+ const cargarUnidades = async () => {
+   setCargando(true)
+   try {
+     const res = await fetch(API_URL)
+     if (!res.ok) throw new Error(`Error del servidor (${res.status})`)
+     const data = await res.json()
+     setUnidades(data)
+     setMensaje(`${data.length} registro(s) cargado(s).`)
+   } catch (error) {
+     setMensaje(`Error al cargar datos: ${error.message}`)
+   } finally {
+     setCargando(false)
+   }
+ }
 
   const handleNuevo = () => {
     setModo('nuevo')
@@ -173,6 +176,7 @@ function UnidadAdmin() {
           <section className="unidad-panel">
             <div className="panel-small-title">Unidad Administrativa</div>
             <div className="panel-title">ADMINISTRACION UNIDAD ADMINISTRATIVA</div>
+            {cargando && <p className="unidad-mensaje">Cargando datos...</p>}
 
             <table className="unidad-table">
               <thead>
