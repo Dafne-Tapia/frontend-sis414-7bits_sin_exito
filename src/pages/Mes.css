@@ -5,12 +5,13 @@
 }
 
 .mes-root {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   font-family: Tahoma, Arial, sans-serif;
   color: #111;
   background: #c0c0c0;
+  overflow: hidden;
 }
 
 .mes-titlebar {
@@ -26,36 +27,37 @@
   flex-shrink: 0;
 }
 
-/* Encabezado reducido, igual que cta-par */
+/* Encabezado compacto igual a ObjGasto con V.S.I.A.F */
 .mes-encabezado {
   background: linear-gradient(135deg, #00366c 60%, #396ea4 90%, #1f85ec 100%);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 24px;
+  padding: 10px 24px;
   border-bottom: 2px solid #6b6b6b;
   flex-shrink: 0;
+  min-height: 70px;
 }
 
 .mes-encabezado-texto {
   display: flex;
   flex-direction: column;
-}
-
-.mes-encabezado-modulo {
-  font-size: 13px;
-  color: #c5daf5;
-  font-weight: bold;
-  letter-spacing: 1px;
-  margin-bottom: 2px;
+  align-items: flex-start;
 }
 
 .mes-encabezado-titulo {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
-  letter-spacing: 2px;
+  letter-spacing: 4px;
   color: #fff;
+}
+
+.mes-encabezado-subtitulo {
+  font-size: 14px;
+  color: #c5daf5;
+  margin-top: 2px;
+  font-style: italic;
 }
 
 .mes-encabezado-acciones {
@@ -65,8 +67,8 @@
 
 .mes-encabezado-btn {
   min-width: 130px;
-  min-height: 32px;
-  padding: 5px 16px;
+  min-height: 30px;
+  padding: 5px 14px;
   color: #1b1b1b;
   background: linear-gradient(to bottom, #eef3f8 0%, #dce7f2 45%, #bfd3e6 55%, #d8e3ee 100%);
   border-top: 2px solid #fff;
@@ -88,12 +90,11 @@
   background: linear-gradient(to bottom, #f7fbff 0%, #e8f0f8 45%, #cddceb 55%, #e6eef7 100%);
 }
 
-/* Layout principal: ocupa el resto de la pantalla con scroll */
+/* Layout: ocupa el resto sin scroll en la raíz */
 .app-layout {
   display: flex;
   flex: 1;
   overflow: hidden;
-  height: calc(100vh - 28px - 70px); /* titlebar + encabezado */
 }
 
 .sidebar {
@@ -146,7 +147,7 @@
   background: linear-gradient(to bottom, #f7fbff 0%, #e8f0f8 45%, #cddceb 55%, #e6eef7 100%);
 }
 
-/* Área de contenido con scroll vertical */
+/* Content area con scroll propio */
 .content-area {
   flex: 1;
   background: #c0c0c0;
@@ -191,8 +192,7 @@
   font-weight: bold;
 }
 
-.mes-form input,
-.mes-form select {
+.mes-form input {
   min-height: 30px;
   border: 2px inset #fff;
   background: #fff;
@@ -204,7 +204,6 @@
 .mes-actions {
   grid-column: 1 / -1;
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
   justify-content: flex-end;
   margin-top: 4px;
@@ -226,56 +225,112 @@
   font-weight: bold;
 }
 
-.mes-table-head {
+/* Tabla con scroll igual a ObjGasto */
+.mes-table-wrapper {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 0;
-}
-
-.mes-table-head h2 {
-  margin: 0 0 0 0;
-}
-
-/* Scroll fijo en la tabla como obj-gasto */
-.mes-table-wrap {
-  overflow-x: auto;
-  overflow-y: auto;
-  max-height: 320px;
-  border: 1px solid #808080;
+  border: 2px inset #808080;
   background: #fff;
+}
+
+.mes-table-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  max-height: 260px;
 }
 
 .mes-table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
   font-size: 13px;
+  background: #fff;
 }
 
-.mes-table thead {
+.mes-table thead th {
+  background: #003399;
+  color: #fff;
+  font-size: 12px;
+  padding: 7px 8px;
+  border: 1px solid #5577bb;
   position: sticky;
   top: 0;
   z-index: 1;
 }
 
-.mes-table th,
-.mes-table td {
-  border: 1px solid #a7a7a7;
-  padding: 8px;
-  text-align: left;
+.mes-table tbody td {
+  border: 1px solid #d0d0d0;
+  padding: 6px 8px;
   vertical-align: middle;
-}
-
-.mes-table th {
-  background: #003399;
-  color: #fff;
-  font-size: 12px;
+  height: 26px;
 }
 
 .mes-table tbody tr:nth-child(even) {
   background: #eef3f8;
+}
+
+.mes-table tbody tr:hover {
+  background: #cce0f5;
+}
+
+/* Scrollbar vertical decorativa igual a ObjGasto */
+.mes-vscrollbar {
+  width: 18px;
+  background: #d4d0c8;
+  border-left: 1px solid #808080;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.mes-vscroll-btn {
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(to bottom, #eef3f8, #d8e3ee);
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #7f7f7f;
+  border-bottom: 1px solid #7f7f7f;
+  font-size: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mes-vscroll-track {
+  flex: 1;
+  background: #c0c0c0;
+}
+
+/* Scrollbar horizontal decorativa */
+.mes-hscroll-bar {
+  display: flex;
+  height: 18px;
+  background: #d4d0c8;
+  border-top: 1px solid #808080;
+  margin-top: 0;
+}
+
+.mes-hscroll-btn {
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(to bottom, #eef3f8, #d8e3ee);
+  border-top: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #7f7f7f;
+  border-bottom: 1px solid #7f7f7f;
+  font-size: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mes-hscroll-track {
+  flex: 1;
+  background: #c0c0c0;
 }
 
 .mes-row-actions {
@@ -284,8 +339,8 @@
 }
 
 .mes-row-actions button {
-  min-height: 26px;
-  padding: 3px 8px;
+  min-height: 22px;
+  padding: 2px 8px;
   color: #1b1b1b;
   background: linear-gradient(to bottom, #eef3f8 0%, #dce7f2 45%, #bfd3e6 55%, #d8e3ee 100%);
   border-top: 2px solid #fff;
@@ -299,27 +354,29 @@
   font-weight: bold;
 }
 
-/* Footer con conteo de registros */
-.mes-table-footer {
+/* Status bar igual a ObjGasto */
+.mes-status-bar {
   margin-top: 8px;
   font-size: 12px;
   color: #006600;
   font-weight: bold;
+  padding: 2px 0;
+}
+
+.mes-status-bar.error {
+  color: #cc0000;
 }
 
 @media (max-width: 900px) {
   .app-layout {
     flex-direction: column;
-    height: auto;
-    overflow: visible;
+    overflow: auto;
   }
-
   .sidebar {
     width: 100%;
     border-right: none;
     border-bottom: 2px solid #808080;
   }
-
   .mes-form {
     grid-template-columns: 1fr;
   }
@@ -327,9 +384,8 @@
 
 @media (max-width: 560px) {
   .mes-encabezado-titulo {
-    font-size: 20px;
+    font-size: 22px;
   }
-
   .mes-form {
     grid-template-columns: 1fr;
   }
