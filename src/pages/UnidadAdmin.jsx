@@ -139,8 +139,13 @@ function UnidadAdmin() {
     )
   }
 
-  const filas = Math.max(unidades.length, 8)
-  const rows = Array.from({ length: filas }, (_, index) => unidades[index] || null)
+ const unidadesFiltradas = unidades.filter((u) =>
+   u.entidad?.toLowerCase().includes(busqueda.toLowerCase()) ||
+   u.ciudad?.toLowerCase().includes(busqueda.toLowerCase())
+ )
+
+ const filas = Math.max(unidadesFiltradas.length, 8)
+ const rows = Array.from({ length: filas }, (_, index) => unidadesFiltradas[index] || null)
 
   return (
     <div className="unidad-root">
