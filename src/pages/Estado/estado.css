@@ -222,3 +222,13 @@
   font-size: 11px;
   color: #000;
 }
+.logo-grupo {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 50%;
+}

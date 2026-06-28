@@ -3,6 +3,7 @@ import { listarEstados, guardarEstado, actualizarEstado, eliminarEstado } from '
 import './estado.css'
 import { Link, useNavigate } from 'react-router-dom'
 import banderaBol from '../../assets/banderaBol.png';
+import logoGrupo from '../../assets/logo_grupo.jpeg'
 
 function Estado() {
   const navigate = useNavigate()
@@ -118,6 +119,7 @@ function Estado() {
             <h1 className="titulo-marca">V.S.I.A.F</h1>
             <p className="subtitulo-marca">Sistema de Activos Fijos</p>
           </div>
+          <img src={logoGrupo} alt="Logo 7 Bits Sin Exito" className="logo-grupo" />
         </div>
       </header>
 
