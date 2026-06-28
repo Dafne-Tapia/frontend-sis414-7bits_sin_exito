@@ -184,6 +184,14 @@ function UnidadAdmin() {
             <div className="panel-title">ADMINISTRACION UNIDAD ADMINISTRATIVA</div>
             {cargando && <p className="unidad-mensaje">Cargando datos...</p>}
 
+            <input
+              type="text"
+              placeholder="Buscar por entidad o ciudad..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              className="unidad-buscador"
+            />
+
             <table className="unidad-table">
               <thead>
                 <tr>
