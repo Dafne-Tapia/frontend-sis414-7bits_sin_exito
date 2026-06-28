@@ -96,11 +96,7 @@ function Mes() {
     <div className="mes-root">
       <div className="mes-titlebar">
         <span>■ SISTEMA DE ACTIVOS FIJOS - MES</span>
-        <div className="mes-controls">
-          <button aria-label="Minimizar">–</button>
-          <button aria-label="Maximizar">□</button>
-          <button className="mes-close" aria-label="Cerrar">✕</button>
-        </div>
+
       </div>
 
       <header className="mes-header">

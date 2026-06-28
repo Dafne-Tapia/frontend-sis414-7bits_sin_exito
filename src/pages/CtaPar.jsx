@@ -218,11 +218,7 @@ function CtaPar() {
       <div className="cta-par-root">
         <div className="cta-par-titlebar">
           <span>SISTEMA DE ACTIVOS FIJOS - CTA.PAR</span>
-          <div className="cta-par-controls" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span className="is-close"></span>
-          </div>
+
         </div>
 
         <header className="cta-par-header">

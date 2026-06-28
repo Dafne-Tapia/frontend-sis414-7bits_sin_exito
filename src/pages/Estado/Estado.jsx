@@ -104,11 +104,7 @@ function Estado() {
     <div className="vsiaf-root">
       <div className="win-titlebar">
         <span>&#9632; SISTEMA DE ACTIVOS FIJOS - ESTADO</span>
-        <div className="win-controls">
-          <button>&#8211;</button>
-          <button>&#9633;</button>
-          <button className="cerrar">&#x2715;</button>
-        </div>
+
       </div>
 
       <header className="encabezado-marca">

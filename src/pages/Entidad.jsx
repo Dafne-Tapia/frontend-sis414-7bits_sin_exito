@@ -120,12 +120,8 @@ const navigate = useNavigate();
     <div className="vsiaf-root">
       {/* Barra título Windows */}
       <div className="win-titlebar">
-        <span>&#9632; SISTEMA DE ACTIVOS FIJOS</span>
-        <div className="win-controls">
-          <button>&#8211;</button>
-          <button>&#9633;</button>
-          <button className="cerrar">&#x2715;</button>
-        </div>
+        <span>&#9632; SISTEMA DE ACTIVOS FIJOS - ENTIDAD</span>
+
       </div>
 
       {/* Header */}

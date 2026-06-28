@@ -17,7 +17,11 @@ function Home() {
   return (
     <div className="vsiaf-root">
 
+      {/* Barra de título estilo Windows */}
+      <div className="win-titlebar">
+        <span>&#9632; SISTEMA DE ACTIVOS FIJOS</span>
 
+      </div>
 
       {/* Encabezado con logo */}
       <header className="encabezado-marca">
