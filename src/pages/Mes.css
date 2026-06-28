@@ -251,3 +251,64 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+
+
+.app-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 240px;
+  background: #d4d0c8;
+  border-right: 2px solid #808080;
+  padding: 10px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.menu-title {
+  background: #003399;
+  color: #fff;
+  text-align: center;
+  font-size: 13px;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #000;
+  font-weight: bold;
+}
+
+.menu-list { list-style: none; }
+.menu-list li { margin-bottom: 5px; }
+
+.menu-btn {
+  display: block;
+  width: 100%;
+  padding: 7px 10px;
+  text-decoration: none;
+  text-align: center;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  color: #1b1b1b;
+  background: linear-gradient(to bottom, #eef3f8 0%, #dce7f2 45%, #bfd3e6 55%, #d8e3ee 100%);
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #7f7f7f;
+  border-bottom: 2px solid #7f7f7f;
+  cursor: pointer;
+}
+
+.menu-btn:hover {
+  background: linear-gradient(to bottom, #f7fbff 0%, #e8f0f8 45%, #cddceb 55%, #e6eef7 100%);
+}
+
+.content-area {
+  flex: 1;
+  background: #f0f0f0;
+  padding: 16px;
+  overflow-y: auto;
+}

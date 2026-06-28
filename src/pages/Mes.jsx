@@ -10,6 +10,18 @@ function Mes() {
 
   const API_URL = 'https://proyectosis414-g-7bitssinexito-ewht.onrender.com/meses'
 
+  // ===== MENÚ COMPLETO (IGUAL QUE ENTIDAD) =====
+  const menuItems = [
+    { label: 'Entidad', path: '/entidad' },
+    { label: 'Objeto de Gasto', path: '/obj-gasto' },
+    { label: 'Unidad Administrativa', path: '/unidad-administrativa' },
+    { label: 'Mes', path: '/mes' },
+    { label: 'Estado', path: '/estado' },
+    { label: 'Baja', path: '/baja' },
+    { label: 'Cta Par', path: '/cta-par' },
+  ]
+  // ===== FIN MENÚ =====
+
   useEffect(() => {
     fetch(API_URL)
       .then(response => {
@@ -111,83 +123,98 @@ function Mes() {
         <Link to="/" className="mes-home">Volver al menú</Link>
       </header>
 
-      <main className="mes-layout">
-        <section className="mes-panel mes-form-panel">
-          <h2>{editandoId !== null ? 'Editar Mes' : 'Registro de Mes'}</h2>
-          <form className="mes-form" onSubmit={handleSubmit}>
-            <label>
-              Número de Mes (1-12)
-              <input 
-                type="number" 
-                placeholder="Ej. 1" 
-                min="1"
-                max="12"
-                value={nuevoMes.mes}
-                onChange={(e) => setNuevoMes({...nuevoMes, mes: e.target.value})}
-                required
-              />
-            </label>
-            <label>
-              Nombre del Mes
-              <input 
-                type="text" 
-                placeholder="Ej. Enero" 
-                value={nuevoMes.nommes}
-                onChange={(e) => setNuevoMes({...nuevoMes, nommes: e.target.value})}
-                required
-              />
-            </label>
-            <div className="mes-actions">
-              <button type="submit">{editandoId !== null ? 'Actualizar' : 'Guardar'}</button>
-              {editandoId !== null && (
-                <button type="button" onClick={handleCancelEdit}>Cancelar</button>
-              )}
-            </div>
-          </form>
-        </section>
+      {/* ===== LAYOUT CON SIDEBAR (EXACTAMENTE IGUAL QUE ENTIDAD) ===== */}
+      <div className="app-layout">
+        <nav className="sidebar">
+          <h2 className="menu-title">MENU PRINCIPAL</h2>
+          <ul className="menu-list">
+            {menuItems.map((item) => (
+              <li key={item.path}>
+                <a href={item.path} className="menu-btn">{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-        <section className="mes-panel">
-          <div className="mes-table-head">
-            <h2>Listado de Meses</h2>
+        <main className="content-area">
+          <div className="mes-panel mes-form-panel">
+            <h2>{editandoId !== null ? 'Editar Mes' : 'Registro de Mes'}</h2>
+            <form className="mes-form" onSubmit={handleSubmit}>
+              <label>
+                Número de Mes (1-12)
+                <input 
+                  type="number" 
+                  placeholder="Ej. 1" 
+                  min="1"
+                  max="12"
+                  value={nuevoMes.mes}
+                  onChange={(e) => setNuevoMes({...nuevoMes, mes: e.target.value})}
+                  required
+                />
+              </label>
+              <label>
+                Nombre del Mes
+                <input 
+                  type="text" 
+                  placeholder="Ej. Enero" 
+                  value={nuevoMes.nommes}
+                  onChange={(e) => setNuevoMes({...nuevoMes, nommes: e.target.value})}
+                  required
+                />
+              </label>
+              <div className="mes-actions">
+                <button type="submit">{editandoId !== null ? 'Actualizar' : 'Guardar'}</button>
+                {editandoId !== null && (
+                  <button type="button" onClick={handleCancelEdit}>Cancelar</button>
+                )}
+              </div>
+            </form>
           </div>
 
-          <div className="mes-table-wrap">
-            <table className="mes-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Número</th>
-                  <th>Nombre</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {registros.length === 0 ? (
+          <div className="mes-panel">
+            <div className="mes-table-head">
+              <h2>Listado de Meses</h2>
+            </div>
+
+            <div className="mes-table-wrap">
+              <table className="mes-table">
+                <thead>
                   <tr>
-                    <td colSpan="4" style={{textAlign: 'center', padding: '20px'}}>
-                      No hay meses registrados.
-                    </td>
+                    <th>ID</th>
+                    <th>Número</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
                   </tr>
-                ) : (
-                  registros.map((registro) => (
-                    <tr key={registro.id}>
-                      <td>{registro.id}</td>
-                      <td>{registro.mes}</td>
-                      <td>{registro.nommes}</td>
-                      <td>
-                        <div className="mes-row-actions">
-                          <button type="button" onClick={() => handleEdit(registro)}>Editar</button>
-                          <button type="button" onClick={() => handleDelete(registro.id)}>Eliminar</button>
-                        </div>
+                </thead>
+                <tbody>
+                  {registros.length === 0 ? (
+                    <tr>
+                      <td colSpan="4" style={{textAlign: 'center', padding: '20px'}}>
+                        No hay meses registrados.
                       </td>
                     </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                  ) : (
+                    registros.map((registro) => (
+                      <tr key={registro.id}>
+                        <td>{registro.id}</td>
+                        <td>{registro.mes}</td>
+                        <td>{registro.nommes}</td>
+                        <td>
+                          <div className="mes-row-actions">
+                            <button type="button" onClick={() => handleEdit(registro)}>Editar</button>
+                            <button type="button" onClick={() => handleDelete(registro.id)}>Eliminar</button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </section>
-      </main>
+        </main>
+      </div>
+      {/* ===== FIN LAYOUT ===== */}
     </div>
   )
 }

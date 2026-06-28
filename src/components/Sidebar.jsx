@@ -8,6 +8,7 @@ function Sidebar() {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/entidad">Entidad</Link></li>
         <li><Link to="/about">About</Link></li>
+        <li><Link to="/mes">Mes</Link></li>
       </ul>
     </aside>
   )
