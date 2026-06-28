@@ -72,6 +72,7 @@ function Entidad() {
     }
   }
 
+
   const handleSeleccionar = async () => {
     if (!selected) return setStatusMsg('Seleccione una fila primero.', 'error')
     setStatusMsg(`Gestión: ${selected.gestion} | Entidad: ${selected.entidad} | ${selected.descEnt} | ${selected.siglaEnt}`, 'ok')
@@ -116,11 +117,7 @@ function Entidad() {
       {/* Barra título Windows */}
       <div className="win-titlebar">
         <span>&#9632; SISTEMA DE ACTIVOS FIJOS</span>
-        <div className="win-controls">
-          <button>&#8211;</button>
-          <button>&#9633;</button>
-          <button className="cerrar">&#x2715;</button>
-        </div>
+
       </div>
 
       {/* Header */}
@@ -176,6 +173,7 @@ function Entidad() {
                           <th style={{ width: '18%' }}>SIGLA</th>
                         </tr>
                       </thead>
+
                       <tbody>
                         {loading ? (
                           <tr><td colSpan="4" style={{ textAlign: 'center' }}>Cargando...</td></tr>

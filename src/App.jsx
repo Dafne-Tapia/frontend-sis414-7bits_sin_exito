@@ -9,6 +9,7 @@ import Baja from './pages/Baja'
 import ObjGasto from './pages/ObjGasto'
 import Mes from './pages/Mes'
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +22,7 @@ function App() {
         <Route path="/estado" element={<Estado />} />
         <Route path="/obj-gasto" element={<ObjGasto />} />
         <Route path="/mes" element={<Mes />} />
+
       </Routes>
     </BrowserRouter>
   )

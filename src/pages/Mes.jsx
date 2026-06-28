@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './Mes.css'
 
+
 function Mes() {
   const [registros, setRegistros] = useState([])
   const [nuevoMes, setNuevoMes] = useState({ mes: '', nommes: '' })
@@ -47,12 +48,11 @@ function Mes() {
     }
 
     if (!nuevoMes.nommes.trim()) {
-      alert('Debe escribir el nombre de un mes')
+      alert('Debes escribir un nombre de mes')
       return
     }
 
     if (editandoId !== null) {
-
       fetch(`${API_URL}/${editandoId}`, {
         method: 'PUT',
         headers: {
@@ -102,7 +102,7 @@ function Mes() {
   }
 
   const handleDelete = (id) => {
-    if (confirm('¿Seguro que desea eliminar este mes?')) {
+    if (confirm('¿Seguro que quiere eliminar este mes?')) {
       fetch(`${API_URL}/${id}`, {
         method: 'DELETE'
       })
@@ -133,21 +133,14 @@ function Mes() {
 
   return (
     <div className="mes-root">
-      <div className="mes-titlebar">
-        <span>■ SISTEMA DE ACTIVOS FIJOS - MES</span>
-        <div className="mes-controls">
-          <button aria-label="Minimizar">–</button>
-          <button aria-label="Maximizar">□</button>
-          <button className="mes-close" aria-label="Cerrar">✕</button>
+      <header className="mes-header-custom">
+        <div className="header-content">
+          <img src="/src/assets/banderaboliviana.png" alt="Logo" className="header-logo" />
+          <div className="header-text">
+            <h1 className="header-title">V.S.I.A.F</h1>
+            <p className="header-subtitle">Sistema de Activos Fijos</p>
+          </div>
         </div>
-      </div>
-
-      <header className="mes-header">
-        <div>
-          <p className="mes-kicker">Módulo de parametrización</p>
-          <h1>Tabla Mes</h1>
-        </div>
-        <Link to="/" className="mes-home">Volver al menú</Link>
       </header>
 
       <div className="app-layout">
@@ -156,7 +149,7 @@ function Mes() {
           <ul className="menu-list">
             {menuItems.map((item) => (
               <li key={item.path}>
-                <a href={item.path} className="menu-btn">{item.label}</a>
+                <Link to={item.path} className="menu-btn">{item.label}</Link>
               </li>
             ))}
           </ul>
@@ -164,7 +157,7 @@ function Mes() {
 
         <main className="content-area">
           <div className="mes-panel mes-form-panel">
-            <h2>{editandoId !== null ? 'Editar Mes' : 'Registro de Mes'}</h2>
+            <h2 className="panel-title">{editandoId !== null ? 'Editar Mes' : 'Registro de Mes'}</h2>
             <form className="mes-form" onSubmit={handleSubmit}>
               <label>
                 Número de Mes (1-12)
@@ -176,6 +169,7 @@ function Mes() {
                   value={nuevoMes.mes}
                   onChange={(e) => setNuevoMes({...nuevoMes, mes: e.target.value})}
                   required
+                  className="input-field"
                 />
               </label>
               <label>
@@ -186,12 +180,13 @@ function Mes() {
                   value={nuevoMes.nommes}
                   onChange={(e) => setNuevoMes({...nuevoMes, nommes: e.target.value})}
                   required
+                  className="input-field"
                 />
               </label>
               <div className="mes-actions">
-                <button type="submit">{editandoId !== null ? 'Actualizar' : 'Guardar'}</button>
+                <button type="submit" className="btn-action">{editandoId !== null ? 'Actualizar' : 'Guardar'}</button>
                 {editandoId !== null && (
-                  <button type="button" onClick={handleCancelEdit}>Cancelar</button>
+                  <button type="button" onClick={handleCancelEdit} className="btn-action">Cancelar</button>
                 )}
               </div>
             </form>
@@ -199,7 +194,7 @@ function Mes() {
 
           <div className="mes-panel">
             <div className="mes-table-head">
-              <h2>Listado de Meses</h2>
+              <h2 className="panel-title">Listado de Meses</h2>
             </div>
 
             <div className="mes-table-wrap">
@@ -227,8 +222,8 @@ function Mes() {
                         <td>{registro.nommes}</td>
                         <td>
                           <div className="mes-row-actions">
-                            <button type="button" onClick={() => handleEdit(registro)}>Editar</button>
-                            <button type="button" onClick={() => handleDelete(registro.id)}>Eliminar</button>
+                            <button type="button" onClick={() => handleEdit(registro)} className="btn-action">Editar</button>
+                            <button type="button" onClick={() => handleDelete(registro.id)} className="btn-action">Eliminar</button>
                           </div>
                         </td>
                       </tr>
