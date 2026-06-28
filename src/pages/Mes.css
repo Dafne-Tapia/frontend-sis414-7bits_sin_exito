@@ -23,39 +23,77 @@
   font-size: 13px;
   font-weight: bold;
   border-bottom: 1px solid #000;
+  flex-shrink: 0;
 }
 
+/* Encabezado reducido, igual que cta-par */
 .mes-encabezado {
   background: linear-gradient(135deg, #00366c 60%, #396ea4 90%, #1f85ec 100%);
   color: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 20px 28px;
+  justify-content: space-between;
+  padding: 14px 24px;
   border-bottom: 2px solid #6b6b6b;
-  min-height: 100px;
+  flex-shrink: 0;
+}
+
+.mes-encabezado-texto {
+  display: flex;
+  flex-direction: column;
+}
+
+.mes-encabezado-modulo {
+  font-size: 13px;
+  color: #c5daf5;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
 }
 
 .mes-encabezado-titulo {
-  font-size: 42px;
+  font-size: 28px;
   font-weight: bold;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   color: #fff;
-  text-align: center;
 }
 
-.mes-encabezado-subtitulo {
-  font-size: 16px;
-  color: #c5daf5;
-  text-align: center;
-  margin-top: 4px;
-  font-style: italic;
+.mes-encabezado-acciones {
+  display: flex;
+  gap: 10px;
 }
 
+.mes-encabezado-btn {
+  min-width: 130px;
+  min-height: 32px;
+  padding: 5px 16px;
+  color: #1b1b1b;
+  background: linear-gradient(to bottom, #eef3f8 0%, #dce7f2 45%, #bfd3e6 55%, #d8e3ee 100%);
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #7f7f7f;
+  border-bottom: 2px solid #7f7f7f;
+  box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #a0a0a0;
+  cursor: pointer;
+  font-family: Tahoma, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mes-encabezado-btn:hover {
+  background: linear-gradient(to bottom, #f7fbff 0%, #e8f0f8 45%, #cddceb 55%, #e6eef7 100%);
+}
+
+/* Layout principal: ocupa el resto de la pantalla con scroll */
 .app-layout {
   display: flex;
   flex: 1;
   overflow: hidden;
+  height: calc(100vh - 28px - 70px); /* titlebar + encabezado */
 }
 
 .sidebar {
@@ -101,12 +139,14 @@
   border-right: 2px solid #7f7f7f;
   border-bottom: 2px solid #7f7f7f;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .menu-btn:hover {
   background: linear-gradient(to bottom, #f7fbff 0%, #e8f0f8 45%, #cddceb 55%, #e6eef7 100%);
 }
 
+/* Área de contenido con scroll vertical */
 .content-area {
   flex: 1;
   background: #c0c0c0;
@@ -124,6 +164,7 @@
   border-right: 2px solid #808080;
   border-bottom: 2px solid #808080;
   padding: 14px;
+  flex-shrink: 0;
 }
 
 .mes-panel h2 {
@@ -190,15 +231,18 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .mes-table-head h2 {
-  margin: 0;
+  margin: 0 0 0 0;
 }
 
+/* Scroll fijo en la tabla como obj-gasto */
 .mes-table-wrap {
   overflow-x: auto;
+  overflow-y: auto;
+  max-height: 320px;
   border: 1px solid #808080;
   background: #fff;
 }
@@ -208,6 +252,12 @@
   border-collapse: collapse;
   background: #fff;
   font-size: 13px;
+}
+
+.mes-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .mes-table th,
@@ -249,9 +299,19 @@
   font-weight: bold;
 }
 
+/* Footer con conteo de registros */
+.mes-table-footer {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #006600;
+  font-weight: bold;
+}
+
 @media (max-width: 900px) {
   .app-layout {
     flex-direction: column;
+    height: auto;
+    overflow: visible;
   }
 
   .sidebar {
@@ -267,7 +327,7 @@
 
 @media (max-width: 560px) {
   .mes-encabezado-titulo {
-    font-size: 28px;
+    font-size: 20px;
   }
 
   .mes-form {

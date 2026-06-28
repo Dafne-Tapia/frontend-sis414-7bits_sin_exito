@@ -98,10 +98,14 @@ function Mes() {
         <span>■ SISTEMA DE ACTIVOS FIJOS - MES</span>
       </div>
 
+      {/* Encabezado reducido con botón Volver al menú arriba a la derecha */}
       <div className="mes-encabezado">
         <div className="mes-encabezado-texto">
-          <h1 className="mes-encabezado-titulo">V.S.I.A.F</h1>
-          <p className="mes-encabezado-subtitulo">Sistema de Activos Fijos</p>
+          <p className="mes-encabezado-modulo">MODULO DE PARAMETRIZACION</p>
+          <h1 className="mes-encabezado-titulo">Mes</h1>
+        </div>
+        <div className="mes-encabezado-acciones">
+          <Link to="/" className="mes-encabezado-btn">Volver al menú</Link>
         </div>
       </div>
 
@@ -117,9 +121,6 @@ function Mes() {
               </li>
             ))}
           </ul>
-          <div className="sidebar-volver">
-            <Link to="/" className="menu-btn">Volver al menú</Link>
-          </div>
         </nav>
 
         <main className="content-area">
@@ -149,10 +150,10 @@ function Mes() {
                 />
               </label>
               <div className="mes-actions">
-                <button type="submit">{editandoId !== null ? 'Actualizar' : 'Guardar'}</button>
                 {editandoId !== null && (
                   <button type="button" onClick={handleCancelEdit}>Cancelar</button>
                 )}
+                <button type="submit">{editandoId !== null ? 'Actualizar' : 'Guardar'}</button>
               </div>
             </form>
           </div>
@@ -161,6 +162,7 @@ function Mes() {
             <div className="mes-table-head">
               <h2>Listado de Meses</h2>
             </div>
+            {/* Scroll fijo en la tabla como obj-gasto */}
             <div className="mes-table-wrap">
               {cargando ? (
                 <p style={{ textAlign: 'center', padding: '20px' }}>Cargando...</p>
@@ -199,6 +201,9 @@ function Mes() {
                   </tbody>
                 </table>
               )}
+            </div>
+            <div className="mes-table-footer">
+              {registros.length} registro(s) cargado(s).
             </div>
           </div>
         </main>
