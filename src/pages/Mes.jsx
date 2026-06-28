@@ -2,6 +2,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './Mes.css'
 
+// Fuentes igual a la imagen original
+const fontLink = document.createElement('link')
+fontLink.rel = 'stylesheet'
+fontLink.href = 'https://fonts.googleapis.com/css2?family=Fredoka+One&family=Dancing+Script:wght@600&display=swap'
+document.head.appendChild(fontLink)
+
 function Mes() {
   const [registros, setRegistros] = useState([])
   const [nuevoMes, setNuevoMes] = useState({ mes: '', nommes: '' })

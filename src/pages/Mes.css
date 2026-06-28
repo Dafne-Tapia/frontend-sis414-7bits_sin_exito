@@ -34,10 +34,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 24px;
+  padding: 6px 24px;
   border-bottom: 2px solid #6b6b6b;
   flex-shrink: 0;
-  min-height: 70px;
+  min-height: 52px;
 }
 
 .mes-encabezado-texto {
@@ -47,17 +47,19 @@
 }
 
 .mes-encabezado-titulo {
-  font-size: 32px;
-  font-weight: bold;
-  letter-spacing: 4px;
+  font-family: 'Fredoka One', 'Arial Rounded MT Bold', Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 3px;
   color: #fff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
 }
 
 .mes-encabezado-subtitulo {
-  font-size: 14px;
+  font-family: 'Dancing Script', 'Brush Script MT', cursive;
+  font-size: 12px;
   color: #c5daf5;
-  margin-top: 2px;
-  font-style: italic;
+  margin-top: 0px;
 }
 
 .mes-encabezado-acciones {
