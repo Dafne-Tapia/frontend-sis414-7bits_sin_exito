@@ -191,8 +191,10 @@ figure.hero-image {
   height: 100%;
   border: none;
   background-image: url('../assets/casa-de-la-moneda-1.jpg');
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
+  background-color: #000;
   position: relative;
   margin: 0;
 }
