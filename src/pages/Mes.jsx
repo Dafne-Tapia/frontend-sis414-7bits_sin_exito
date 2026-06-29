@@ -122,8 +122,8 @@ function Mes() {
           <h1 className="mes-encabezado-titulo">V.S.I.A.F</h1>
           <p className="mes-encabezado-subtitulo">Sistema de Activos Fijos</p>
         </div>
+        <img src={logoGrupo} alt="Logo 7 Bits Sin Exito" className="logo-grupo" />
         <div className="mes-encabezado-acciones">
-            <img src={logoGrupo} alt="Logo 7 Bits Sin Exito" className="logo-grupo" />
           <Link to="/" className="mes-encabezado-btn">Volver al menú</Link>
         </div>
 
