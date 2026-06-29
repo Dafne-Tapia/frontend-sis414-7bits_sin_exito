@@ -2,10 +2,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './Mes.css'
 import bandera from '../assets/banderaBol.png'
-import logoGrupo from '../assets/logo_grupo.jpeg'
 
 
-// Fuentes igual a la imagen original
+
+
 const fontLink = document.createElement('link')
 fontLink.rel = 'stylesheet'
 fontLink.href = 'https://fonts.googleapis.com/css2?family=Fredoka+One&family=Dancing+Script:wght@600&display=swap'
@@ -122,7 +122,7 @@ function Mes() {
           <h1 className="mes-encabezado-titulo">V.S.I.A.F</h1>
           <p className="mes-encabezado-subtitulo">Sistema de Activos Fijos</p>
         </div>
-        <img src={logoGrupo} alt="Logo 7 Bits Sin Exito" className="logo-grupo" />
+
         <div className="mes-encabezado-acciones">
           <Link to="/" className="mes-encabezado-btn">Volver al menú</Link>
         </div>

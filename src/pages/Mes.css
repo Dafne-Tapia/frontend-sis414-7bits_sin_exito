@@ -393,8 +393,3 @@
     grid-template-columns: 1fr;
   }
 }
-.mes-encabezado-acciones {
-  display: flex;
-  gap: 10px;
-  margin-left: auto;  /* ← agrega esto */
-}
