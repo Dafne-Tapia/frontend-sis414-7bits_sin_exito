@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './Mes.css'
-import bandera from '../assets/bandera.png'
+import bandera from '../assets/banderaBol.png'
 import logoGrupo from '../assets/logo_grupo.jpeg'
 
 
@@ -125,7 +125,7 @@ function Mes() {
         <div className="mes-encabezado-acciones">
           <Link to="/" className="mes-encabezado-btn">Volver al menú</Link>
         </div>
-        <img src={logoGrupo} alt="Logo 7 Bits Sin Exito" className="logo-grupo"
+        <img src={logoGrupo} alt="Logo 7 Bits Sin Exito" className="logo-grupo" />
       </header>
 
       <div className="app-layout">
